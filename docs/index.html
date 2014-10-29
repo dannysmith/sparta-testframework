@@ -1,0 +1,385 @@
+<html><head><title>iRedeem Automation Suite - Documentation</title><link href="prettify.css" type="text/css" rel="stylesheet" /><script type="text/javascript" src="prettify.js"></script><link href="styles.css" rel="stylesheet"></head><body onload="prettyPrint()"><article class="markdown-body entry-content"><h1>iRedeem Automated UI Tests</h1>
+
+<p>NOTE: You can view this README as an HTML document by running <code class="prettyprint">rake generate_docs</code> and visiting <code class="prettyprint">./docs/index.html</code>.</p>
+
+<p>This document describes the iRedeem acceptance test/UI test framework. The framework has been designed with three goals:</p>
+
+<ol>
+<li>Make it as easy as possible to write working tests quickly.</li>
+<li>Reduce the amount of UI automation (clicking etc) as much as possible.</li>
+<li>Provide a framework that allows non-rubyists (or people just starting out) to bug fix or add tests.</li>
+</ol>
+
+<h2>Installation</h2>
+
+<p><strong>Prerequisites</strong>: Ruby 2.0, libxml and MySQL-devel. On OSX you could use <a href="http://brew.sh">Homebrew</a> to install these. I&#39;d reccomend <a href="https://github.com/sstephenson/rbenv">Rbenv</a> is you&#39;re on OSX. On windows you should install Ruby200 (32-bit version) and DevKit.</p>
+
+<p>A detailed guide for installing on Windows is on Confluence <a href="http://confluence.tcgnws.com/display/PHPC/iRedeem+Automated+UI+Tests">here</a>. Note that it includes many of the steps below.</p>
+
+<p>On OSX/Unix, is should just be a case of checking out the <code class="prettyprint">stories</code> repository and running <code class="prettyprint">bundle install</code>. Unfortunately, on Windows things are a little more difficult. Most gems should install correctly through Bundler, but libxml-ruby requires some special attention:</p>
+
+<ol>
+<li>Manually Download the Windows version of the gem <a href="https://rubygems.org/gems/libxml-ruby/versions/2.7.0-x86-mingw32">from rubygems</a> (I&#39;m using 2.7.0, at the time of writing).</li>
+<li>Install the gem from the local download:</li>
+</ol>
+
+<pre><code class="prettyprint shell">cd /Downloads
+gem install libxml-ruby --local
+</code></pre>
+
+<ol>
+<li>Clone the libxml-ruby repo <a href="https://github.com/xml4r/libxml-ruby">from GitHub</a>.</li>
+<li>Move the dll files from <code class="prettyprint">lib/libs</code> to somewhere in your windows Path. (I put them in <code class="prettyprint">C:\Ruby193\bin</code> and in <code class="prettyprint">C:\Ruby200\bin</code>.)</li>
+<li>Test that libxml works:</li>
+</ol>
+
+<pre><code class="prettyprint ruby">$ irb
+irb&gt; require &#39;libxml&#39;
+=&gt; true
+</code></pre>
+
+<p>Note that I <em>had</em> to download and then install from local for this to work -- <code class="prettyprint">gem install libxml-ruby --platform x86-mswin32-60</code> failed, as did trying to build native extensions from source using devkit.</p>
+
+<ol>
+<li><a href="http://dev.mysql.com/downloads/connector/c/">Download the MySQL C connector</a> - get the archive for Windows (x86, 32-bit).</li>
+<li>Extract it to <code class="prettyprint">C:mysql-connector</code>.</li>
+<li>Copy <code class="prettyprint">C:/mysql-connector/lib/libmysql.dll</code> from the MySQL installation folder to your Ruby installation&#39;s bin folder: <code class="prettyprint">C:/Ruby200/bin</code>.</li>
+<li>Run <code class="prettyprint">gem install mysql2 --platform=ruby -- &#39;--with-mysql-dir=&quot;C:\mysql-connector&quot;&#39;</code></li>
+</ol>
+
+<h3>Host File Entries</h3>
+
+<p>You need to add the following entries to your hosts file:</p>
+
+<pre><code class="prettyprint"># iRedeem
+172.16.13.19 iclp.iredeem.globalmarketingsoftware.com
+172.16.24.145 ci-iredeem.collinsontech.com
+172.16.24.144 ci-koinos.collinsontech.com
+172.16.24.131 teamcity.latitude-dev.local
+172.16.89.23 reward3d-ft.collinsontech.com
+172.16.89.22 koinos-ft.globalmarketingsoftware.com
+</code></pre>
+
+<h2>Test Agent Setup and Access</h2>
+
+<p>The PHPTestAgent can be accessed with <code class="prettyprint">root@172.16.24.137</code> and password <code class="prettyprint">L4t1tude!</code>.</p>
+
+<h3>Cucumber Tests</h3>
+
+<p>There&#39;s only one build step, which executes the following commands:</p>
+
+<pre><code class="prettyprint shell"># Set up rbenv in path
+export RBENV_ROOT=/usr/local/rbenv
+export PATH=&quot;$RBENV_ROOT/bin:$PATH&quot;
+eval &quot;$(rbenv init -)&quot;
+bundle install
+bundle exec rbenv rehash
+bundle exec ruby -v
+echo &quot;Running the rake task...&quot;
+CONFIG=ci HEADLESS=true bundle exec rake production
+</code></pre>
+
+<p>The build step should be set to execute with <code class="prettyprint">stories</code> as the working directory and the artefact path should be set to <code class="prettyprint">stories/results =&gt; results</code>.</p>
+
+<h3>Koinos Tests</h3>
+
+<p>There&#39;s only one build step, which executes the following commands:</p>
+
+<pre><code class="prettyprint shell"># Set up rbenv in path
+export RBENV_ROOT=/usr/local/rbenv
+export PATH=&quot;$RBENV_ROOT/bin:$PATH&quot;
+eval &quot;$(rbenv init -)&quot;
+bundle install
+bundle exec rbenv rehash
+bundle exec ruby -v
+echo &quot;Running RSpec&quot;
+HEADLESS=true bundle exec rspec --format html --out ./results/koinos_report.html
+</code></pre>
+
+<p>The build step should be set to execute with <code class="prettyprint">stories</code> as the working directory and the artefact path should be set to <code class="prettyprint">stories/results/koinos_report.html =&gt; reports</code>.</p>
+
+<h3>Linux Box Test Agent Setup</h3>
+
+<p>If you need to set up a new test agent to run these tests, the required steps are here: <a href="https://gist.github.com/dannysmith/9051803">https://gist.github.com/dannysmith/9051803</a>.</p>
+
+<h2>Strategy</h2>
+
+<p>The features and step_definitions are logically split into two types:</p>
+
+<ul>
+<li><strong>Clean Features</strong> are acceptance criteria. They must always pass and are well-designed using page objects to abstract the workings of the individual pages.</li>
+<li><strong>Dirty Features</strong> are quick and dirty features or scenarios written by QAs or developers to test a specific part of the system. It&#39;s not expected that they always pass, as they may depend on some complex configuration and may not be written using page objects.</li>
+</ul>
+
+<p>By separating dirty features, it allows developers and QAs who are not experts at cucumber to use the tool without danger of breaking the acceptance tests running on TeamCity. If a dirty test is deemed important enough, it could be refactored and turned into clean acceptance criteria. If a dirty test fails, it could indicate that the test is broken, or that iRedeem is broken. If it transpires that a dirty test is broken, it can be tagged with @off so that it never runs, or simply deleted.</p>
+
+<p>These dirty tests, while not run with every commit, could be run at the beginning of regression testing to indicate possible bugs for manual testers to investigate.</p>
+
+<p><img src="http://f.cl.ly/items/3P3g381H2U3C0c2C180E/Screen%20Shot%202014-02-25%20at%2012.19.11.png" alt="Diagram"></p>
+
+<p><a href="https://speakerdeck.com/dannysmith/clean-and-dirty-acceptance-tests-with-cucumber-and-watir">This presentation</a> contains more detail on the idea.</p>
+
+<h2>Basic constructs</h2>
+
+<p>This framework uses the PageObject gem as well as data models to represent the system.  Details of the methods available on data model classes are shown as comments in the model class definitions (<code class="prettyprint">/features/support/models</code>). The methods available on page objects aren&#39;t documented as they should have self-explanatory names.</p>
+
+<p>In general, the acceptance tests are high-level.</p>
+
+<pre><code class="prettyprint ruby">When I do some things
+Then something should be checked
+</code></pre>
+
+<p>In general, the actual actions to be taken are described in the step definitions:</p>
+
+<pre><code class="prettyprint ruby">When /^I do some things$/ do
+  visit(PageOnePage).set_something_up
+  on(PageOnePage).do_another_thing
+  visit(PageTwoPage).do_something_else
+end
+
+Then /^something should be checked$/ do
+  on(PageTwoPage).assert_some_things_are_right
+end
+</code></pre>
+
+<p>In general, data that is particular to the page, such as error messages that should be displayed, are kept within the page object. Data that is used accross scenario steps or lines is passed into the page object&#39;s methods.</p>
+
+<p>In general, an object is passed first - usually a product:</p>
+
+<pre><code class="prettyprint ruby">on(PageOnePage).do_another_thing(Product.last)
+</code></pre>
+
+<p>and, by convention, is referred to by a sensible name in the method. In the case of a product, this is always &#39;product&#39;, unless multiple products are passed.</p>
+
+<pre><code class="prettyprint ruby">class PageOnePage
+  def do_another_thing(product)
+    @browser.h1(class: &#39;heading&#39;).should == prodct.data.name
+  end
+end
+</code></pre>
+
+<p>If other parameters are required by the method, they are passed as a hash of parameters. This convention borrows from Rails and helps make it clearer what is being passed in long lists of parameters:</p>
+
+<pre><code class="prettyprint ruby">on(PageOnePage).do_another_thing(Product.last, quantity: 3, mode: &#39;list&#39;)
+</code></pre>
+
+<p>This hash of parameters is <em>always</em> referred to as <code class="prettyprint">params</code> in the method. In the above example we can access the individual items with <code class="prettyprint">params[:mode]</code>  or <code class="prettyprint">params[:quantity]</code>.</p>
+
+<pre><code class="prettyprint ruby">class PageOnePage
+  def do_another_thing(product, params = {})
+    if params[:mode] == &#39;list&#39;
+        @browser.h1(class: &#39;heading&#39;).should == prodct.data.name
+        @product.text_field(class: &#39;qty&#39;).set(params[:quantity])
+    end
+  end
+end
+</code></pre>
+
+<h3>Fat &amp; Skinny Step Definitions</h3>
+
+<p>Taking a leaf out of Rails&#39; book, step definitions should be kept as &#39;skinny&#39; as possible, delegating work to either models or page objects. However, because the back-end of iRedeem is so heavily based on Magento it&#39;s design and HTML isn&#39;t very likely to change. It would be extremely onerous to model the back-end with page objects because there are so many pages involved.</p>
+
+<p>For the sake of simplicity, tests which manipulate the back-end UI do not generally use page objects, but instead manipulate the browser directly from the step definitions. In other words, the step_definitions are fat.</p>
+
+<h2>Writing Exploratory Tests</h2>
+
+<p>The fact that we&#39;ve separated &#39;clean&#39; acceptance crateria scenarios from quick-and-dirty other scenarios means that we can use cucumber for writing exploratory tests or bug tests. For example, given a bug:</p>
+
+<p><img src="http://f.cl.ly/items/2Y3n1i3w1m163r0c2p3q/Screen%20Shot%202014-02-25%20at%2012.04.55.png" alt="Bug"></p>
+
+<p>We could write a quick and dirty feature:</p>
+
+<p><img src="http://f.cl.ly/items/0l180N1b0q1e42460H3G/Screen%20Shot%202014-02-25%20at%2012.06.36.png" alt="Dirty Feature"></p>
+
+<p>Then write some quick and dirty step definitions that describe the bug:</p>
+
+<p><img src="http://f.cl.ly/items/2m3j1P0k3H0z2X220z0d/Screen%20Shot%202014-02-25%20at%2012.07.38.png" alt="Dirty steps"></p>
+
+<p>If these pass as green, we know we&#39;ve accurately described the bug:</p>
+
+<pre><code class="prettyprint ruby">Then(/^an error should be displayed$/) do
+  @browser.div(class: &#39;messages&#39;).text.should include &#39;Error&#39;
+end
+</code></pre>
+
+<p>We can then refactor this to &#39;reverse&#39; the assertion to the test describes the expected behaviour:</p>
+
+<pre><code class="prettyprint ruby">Then(/^an error should not be displayed$/) do
+  @browser.div(class: &#39;messages&#39;).text.should_not include &#39;Error&#39;
+end
+</code></pre>
+
+<p>We can then commit this code and pass on to the developers for fixing. The developers could either use cucumber themselves to check that the bug is fixed, or when the ticket domes back into FT, we could run <code class="prettyprint">rake t @jira-ird-787</code> to check that the fix has worked.</p>
+
+<p>If it&#39;s decided that this test is worth adding to the clean features, we could refactor it to use page objects and retag it as @clean.</p>
+
+<h2>Project Structure</h2>
+
+<pre><code class="prettyprint text">|- config.yml                           General configuration settings
+|- cucumber.yml                         The cucumber profiles
+|- Gemfile                              
+|- Rakefile                             Rake tasks to execute tests
+|- README.md                            This file
+|- features/
+|       |- clean/                       Clean features describing acceptance criteria
+|       |- dirty/                       Quick and dirty features for testing
+|       |- step_definitions/
+|       |       |- clean-steps/         Step definitions for clean features
+|       |       `- dirty_steps/         Step definitions for dirty features
+|       `- support
+|               |- data/                Setup and test data as YAML files
+|               |- dirty_pages/         Page objects used in dirty tests
+|               |- helpers/             Helper methods and overrides
+|               |- models
+|                       |- basket.rb    A class for creating Basket objects (not very useful)
+|                       |- category.rb  A class for creating Category objects
+|                       |- koinos.rb    Helper classes for the Koinos API
+|                       |- mageapi.rb   Helper classes for the Magento API
+|                       |- member.rb    A class for creating Member objects
+|                       `- product.rb   A class for creating Product objects
+|               |- pages                Properly-structured page objects
+|               |- env.rb               Environment settings
+|               `- hooks.rb             Global hooks and setup code
+|- lib/
+|       `- env_config.rb                A class to expose config.yml and YAML test data.
+|- logs/                                API requests are logged here if the debug flag is on in config.yml
+`- results/                             Contains rerun.txt and/or an HTML report.
+|   `- screenshots/                     Contains screenshots of failed scenarios
+`- spec
+    |- koinos_spec.rb                   Contains the Koinos RSpec tests
+    |- koinos_test.rb                   A KoinosTest class for working with Koinos
+    `- spec_helper.rb                   Setup and generic methods for use in koinos tests.
+</code></pre>
+
+<h2>Tagging Policy</h2>
+
+<p>This isn&#39;t set in stone, but as a guide, the following tags are recommended:</p>
+
+<ul>
+<li><strong>@dirty</strong> - executed as part of the &#39;dirty&#39; test suite. It&#39;s expected that some of these might fail.</li>
+<li><strong>@clean</strong> - executed as part of the main test suite on CI Build Server. <code class="prettyprint">rake production</code> currently executes all of these features, but when the test suite is large enough it would make sense to add a <code class="prettyprint">rake regression</code> task to execute all @clean features, and attach this to a manual build on TeamCity. This could be run before deploying trunk to a new environment, and <code class="prettyprint">rake production</code> could be set to run only @smoke features.</li>
+<li><strong>@not_started</strong> - yet to be worked on, will never execute.</li>
+<li><strong>@wip</strong> - being worked on, will never execute unless explicitly called with <code class="prettyprint">rake t @wip</code>. It&#39;s safe to commit these to trunk knowing that they won&#39;t run.</li>
+<li><strong>@manual</strong> - Flagged as a manual test, will never execute unless explicitly called with <code class="prettyprint">rake t @manual</code>.</li>
+<li><strong>@headless</strong> - A browser will not be opened for these features or scenarios.</li>
+<li><strong>@jira-ird-XXX</strong> - Reference to a JIRA ticket. Ideally, all features should have this.</li>
+<li><strong>@slow</strong> - The feature is particularly slow and should not be run regularly.</li>
+<li><strong>@smoke</strong> - executed as part of the main test suite on CI Build Server <strong>with every commit</strong>. This isn&#39;t currently being used (see @clean, above).</li>
+</ul>
+
+<p>Here&#39;s an example of one lifecycle that a feature might go through:</p>
+
+<h3>1. A BA creates a feature:</h3>
+
+<pre><code class="prettyprint ruby">@dirty @jira-ird-123 @not_started
+Feature: Some Acceptance Criteria
+    ...
+</code></pre>
+
+<h3>2. A Dev in Test decides that this feature should form part of the clean tests</h3>
+
+<p>After tidying up the feature and making use of any generic steps, the DiT might move it to /clean and retag it:</p>
+
+<pre><code class="prettyprint ruby">@clean @jira-ird-123 @not_started
+Feature: Some Acceptance Criteria
+    ...
+</code></pre>
+
+<h3>3. A DiT starts work on it</h3>
+
+<pre><code class="prettyprint ruby">@clean @jira-ird-123 @wip
+Feature: Some Acceptance Criteria
+    ...
+</code></pre>
+
+<p>Note: It&#39;s perfectly safe to commit @wip code to trunk, although in an ideal world this would&#39;t happen.</p>
+
+<h3>4. Work on the test is finished</h3>
+
+<pre><code class="prettyprint ruby">@clean @jira-ird-123
+Feature: Some Acceptance Criteria
+    ...
+</code></pre>
+
+<h3>5. Once of the scenarios is really slow, so we stop it running on every commit to trunk</h3>
+
+<pre><code class="prettyprint ruby">@clean @jira-ird-123 @wip
+Feature: Some Acceptance Criteria
+    This is a features
+
+    Scenario: A quick scenario
+        Given ...
+
+    @slow
+    Scenario: A slow scenario
+        Given...
+</code></pre>
+
+<h2>Running Koinos Tests</h2>
+
+<p>The Koinos tests are written with RSpec, and use some of the libraries and classes that form part of the acceptance test suite, most noteably the Member class. A member is first created using UI automation on the Koinos web interface and then RSpec tests compare API returns against that.</p>
+
+<p>The koinos tests make extensive use of KoinosTest class, found in <code class="prettyprint">spec/koinos_test.rb</code>. This is intended to simplify future work on koinos tests. It&#39;s API is briefly documented in the file.</p>
+
+<p>The koinos tests can be executed by running <code class="prettyprint">rspec</code> in the <code class="prettyprint">stories</code> directory. If you need to see the XML that&#39;s sent and recieved, set   <code class="prettyprint">debug_api_requests: true</code> in <code class="prettyprint">config.yml</code> and it will be output to STDOUT.</p>
+
+<h2>Rake tasks</h2>
+
+<p>There are a number of rake tasks available, and you can always add more. Some to note in particular are:</p>
+
+<ul>
+<li><code class="prettyprint">rake generate_docs</code> converts the REAME.md file into an HTML document.</li>
+<li><code class="prettyprint">rake clean</code> clears out the logs and results directories. <strong>You should run this before comitting</strong> to avoid polluting the CI artifacts with old screenshots and reports.</li>
+<li><code class="prettyprint">rake production</code> used by TeamCity ro execute @clean features on CI.</li>
+<li><code class="prettyprint">rake wip</code> runs any features that are tagged @wip. You&#39;ll use this lots when working locally.</li>
+<li><code class="prettyprint">rake t @sometag</code> runs a specific tag, again you&#39;ll probably use this lots when working locally.</li>
+<li><code class="prettyprint">rake help</code> shows some details of the available tasks.</li>
+</ul>
+
+<h2>Assumptions</h2>
+
+<p>The iRedeem test suite assumes that iRedeem has been configured in a sensible way. The actual configuration needed is far to complex to detail here, but in general:</p>
+
+<ul>
+<li>A vendor called &#39;Automation Test Vendor&#39; exists with the right ID and settings.</li>
+<li>Pricebuilder is enabled and correctly configured.</li>
+<li>Global settings for exchange rates etc are set up correctly.</li>
+<li>Koinos is configured to allow connections from the correct IP ranges.</li>
+<li>uDropship is correctly configured.</li>
+<li>The Auction module is switched on and correctly configured.</li>
+</ul>
+
+<h2>Using IRB inside the application</h2>
+
+<p>A test feature and scenario exists to allow you to access pry inside the applicaton. Run:</p>
+
+<pre><code class="prettyprint">rake t @test
+</code></pre>
+
+<p>You&#39;ll then end up isnide a pry instance, with the test environment correctly loaded.</p>
+
+<p>Needless to say, you can also start a pru instance by adding <code class="prettyprint">binding.pry</code> anywhere in the code. This will start a pry instance at that point. <a href="https://github.com/deivid-rodriguez/pry-byebug">Pry-byebug</a> is also included, so ou have access to it&#39;s commands too.</p>
+
+<h2>Commit Policy</h2>
+
+<p>In an ideal world:</p>
+
+<ol>
+<li>Anyone can commit features to <code class="prettyprint">/dirty</code>, but they must be tagged with a JIRA number and <code class="prettyprint">@not_started</code>. The idea is that even BAs or developers could commit new feature files.</li>
+<li>Any QAs or Devs can commit to <code class="prettyprint">/dirty_steps</code> and <code class="prettyprint">/dirty_pages</code>, but they must pass locally first.</li>
+<li>Any code committed to <code class="prettyprint">/clean</code>, whether features or ruby, must pass on CI and have been code reviewed by a another ruby developer.</li>
+</ol>
+
+<h2>Contact</h2>
+
+<p>The majority of this framework was written by Danny Smith</p>
+
+<ul>
+<li>email: <a href="mailto:daniel.smith@collinsontech.com">daniel.smith@collinsontech.com</a> or <a href="mailto:danny@dasmith.co.uk">danny@dasmith.co.uk</a></li>
+<li>twitter: <a href="https://twitter.com/dannysmith">@dannysmith</a></li>
+<li>skype: <a href="skype:dannyasmith?chat">dannyasmith</a></li>
+</ul>
+
+<p>Feel free to get in touch, even if I don&#39;t work for CTS anymore :-)</p>
+</article></script></body>
+</html>
