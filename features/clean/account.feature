@@ -1,4 +1,4 @@
-@wip
+@clean
 Feature: Test
 
   Scenario: Test
