@@ -5,6 +5,7 @@ require 'cucumber'
 require 'cucumber/rake/task'
 require 'rubocop/rake_task'
 require 'rake/clean'
+require 'zip'
 require 'behave'
 
 # rake clean can be used to clear out old reports and screenshots
