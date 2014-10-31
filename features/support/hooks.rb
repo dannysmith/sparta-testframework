@@ -21,7 +21,6 @@ Before do
     # This stuff will only run before the first scenario executed. Use it to set up data etc.
   end
 
-  headless.video.start_capture if ENV['HEADLESS']
 end
 
 After do |scenario|
@@ -38,12 +37,6 @@ After do |scenario|
     image = browser.screenshot.base64
     embed "data:image/png;base64,#{image}",'image/png'
 
-    if ENV['HEADLESS']
-      headless.video.stop_and_save("#{output_path}.mov")
-      puts "See Video: #{output_path}.mov"
-    end
-  else
-    headless.video.stop_and_discard if ENV['HEADLESS']
   end
 end
 
