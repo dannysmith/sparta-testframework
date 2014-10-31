@@ -5,6 +5,7 @@ require 'cucumber'
 require 'cucumber/rake/task'
 require 'rubocop/rake_task'
 require 'rake/clean'
+require 'behave'
 
 # rake clean can be used to clear out old reports and screenshots
 CLEAN.include('results/rerun.txt', 'results/report.html', 'results/koinos_report.html', 'results/screenshots/*.*', 'logs/*.*')
@@ -56,6 +57,7 @@ task :generate_docs, "Generate HTML Documentation from the README.html" do |t|
   system 'ruby ./bin/generate_docs_from_readme.rb'
 end
 
+# Download Features from JIRA using Behave Pro
 desc "Download features from JIRA"
 task :download do
   Behave::FeatureDownloader.new({

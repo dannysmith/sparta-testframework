@@ -14,6 +14,8 @@ gem 'headless'
 
 # Interacting with APIs
 gem 'httparty'
+gem 'zip'
+gem 'behave'
 
 # Manipulating Data
 gem 'betterlorem'
