@@ -2,7 +2,6 @@
 require 'rspec'
 require 'watir' # To set up a new Koinos User
 require 'httparty'
-require 'savon'
 require 'pry'
 
 # Require the models and lib files

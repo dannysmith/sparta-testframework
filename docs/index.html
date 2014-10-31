@@ -236,6 +236,44 @@ Feature: Some Acceptance Criteria
 
 <p>Needless to say, you can also start a pru instance by adding <code class="prettyprint">binding.pry</code> anywhere in the code. This will start a pry instance at that point. <a href="https://github.com/deivid-rodriguez/pry-byebug">Pry-byebug</a> is also included, so ou have access to it&#39;s commands too.</p>
 
+<h2>Working on a new feature of the test suite</h2>
+
+<p>First, create a feature branch:</p>
+
+<pre><code class="prettyprint shell">master$&gt; git checkout -b my-feature
+</code></pre>
+
+<p>Then fire up the app and do some work:</p>
+
+<pre><code class="prettyprint shell">my-feature$&gt; subl .
+</code></pre>
+
+<p>Regularly test, commit and push that work to github:</p>
+
+<pre><code class="prettyprint shell">my-feature$&gt; rspec
+my-feature$&gt; git commit -m &quot;Some Stuff&quot;
+my-feature$&gt; git push
+</code></pre>
+
+<p>Then submit a pull request to the master branch (note that you&#39;ll need the hub gem installed for this to work):</p>
+
+<pre><code class="prettyprint shell">my-feature$&gt; git pull-request -b master
+</code></pre>
+
+<p>Head to GitHub to accept the pull request and merge to <code class="prettyprint">master</code>.</p>
+
+<h2>Deploying to Production</h2>
+
+<p>To deploy <code class="prettyprint">master</code> to production:</p>
+
+<pre><code class="prettyprint shell">master$&gt; git pull
+master$&gt; git checkout production
+production$&gt; git pull
+production$&gt; git merge master
+production$&gt; git push
+master$&gt; git checkout master
+</code></pre>
+
 <h2>Commit Policy</h2>
 
 <p>In an ideal world:</p>

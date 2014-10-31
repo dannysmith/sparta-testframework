@@ -12,7 +12,6 @@
 #         :customer_data=>
 #           {:item=>
 #             [
-#               {:key=>"iredeem_member_id", :value=>"110"},
 #               {:key=>"prefix", :value=>"Ms."},
 #               {:key=>"lastname", :value=>"Last name"},
 #               {:key=>"firstname", :value=>"First name"},
@@ -27,8 +26,7 @@
 #         :exchange_rate=>"1.000000",
 #         :response_type=>"ACCEPT",
 #         :customer_data=>
-#           {:iredeem_member_id=>"110",
-#            :prefix=>"Ms.",
+#          { :prefix=>"Ms.",
 #            :lastname=>"Last name",
 #            :firstname=>"First name",
 #            :iredeem_points_balance=>"10"
