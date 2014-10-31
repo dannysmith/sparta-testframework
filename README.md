@@ -21,11 +21,8 @@ There's only one build step, which executes the following commands:
 
 ````shell
 # Set up rbenv in path
-export RBENV_ROOT=/usr/local/rbenv
-export PATH="$RBENV_ROOT/bin:$PATH"
-eval "$(rbenv init -)"
+rvm use $(cat .ruby-version) --install
 bundle install
-bundle exec rbenv rehash
 bundle exec ruby -v
 echo "Running the rake task..."
 CONFIG=ci HEADLESS=true bundle exec rake production
