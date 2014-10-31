@@ -22,7 +22,6 @@ DB = Sequel.connect(adapter: 'mysql2',
                     database: EnvConfig.database_name,
                     password: EnvConfig.database_password)
 
-binding.pry
 # Set up World
 World(RSpec::Matchers)
 

@@ -7,8 +7,8 @@ defaults: &execution_defaults
 
 ci:
   <<: *execution_defaults
-  base_url: http://unix.spartaglobal.com/moodle/
-  admin_url: http://unix.spartaglobal.com/moodle/admin/
+  base_url: http://unix.spartaglobal.com/moodle3/
+  admin_url: http://unix.spartaglobal.com/moodle3/admin/
   admin_username: moodle
   admin_password: soXy3zX2JTRwZCXw!
 

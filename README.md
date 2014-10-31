@@ -29,24 +29,6 @@ echo "Running the rake task..."
 CONFIG=ci HEADLESS=true bundle exec rake production
 ````
 
-The build step should be set to execute with `stories` as the working directory and the artefact path should be set to `stories/results => results`.
-
-### RSpec API Tests
-There's only one build step, which executes the following commands:
-
-````shell
-# Set up rbenv in path
-export RBENV_ROOT=/usr/local/rbenv
-export PATH="$RBENV_ROOT/bin:$PATH"
-eval "$(rbenv init -)"
-bundle install
-bundle exec rbenv rehash
-bundle exec ruby -v
-echo "Running RSpec"
-HEADLESS=true bundle exec rspec --format html --out ./results/koinos_report.html
-````
-The build step should be set to execute with `stories` as the working directory and the artefact path should be set to `stories/results/koinos_report.html => reports`.
-
 ## Strategy
 
 The features and step_definitions are logically split into two types:
@@ -60,11 +42,9 @@ These dirty tests, while not run with every commit, could be run at the beginnin
 
 ![Diagram](http://f.cl.ly/items/3P3g381H2U3C0c2C180E/Screen%20Shot%202014-02-25%20at%2012.19.11.png)
 
-[This presentation](https://speakerdeck.com/dannysmith/clean-and-dirty-acceptance-tests-with-cucumber-and-watir) contains more detail on the idea.
-
 ## Basic constructs
 
-This framework uses the PageObject gem as well as data models to represent the system.  Details of the methods available on data model classes are shown as comments in the model class definitions (`/features/support/models`). The methods available on page objects aren't documented as they should have self-explanatory names.
+### Features
 
 In general, the acceptance tests are high-level.
 
@@ -73,34 +53,40 @@ When I do some things
 Then something should be checked
 ````
 
+### Page Objects & the App class
+
+TODO
+
+### Step Definitions
+
 In general, the actual actions to be taken are described in the step definitions:
 
 ````ruby
 When /^I do some things$/ do
-  visit(PageOnePage).set_something_up
-  on(PageOnePage).do_another_thing
-  visit(PageTwoPage).do_something_else
+  @app.home.set_something_up
+  @app.home.do_another_thing
+  @app.courses.do_something_else
 end
 
 Then /^something should be checked$/ do
-  on(PageTwoPage).assert_some_things_are_right
+  @app.courses.assert_some_things_are_right
 end
 ````
 
 In general, data that is particular to the page, such as error messages that should be displayed, are kept within the page object. Data that is used accross scenario steps or lines is passed into the page object's methods.
 
-In general, an object is passed first - usually a product:
+In general, an object is passed first:
 
 ````ruby
-on(PageOnePage).do_another_thing(Product.last)
+@app.courses.do_another_thing(Course.first)
 ````
 
-and, by convention, is referred to by a sensible name in the method. In the case of a product, this is always 'product', unless multiple products are passed.
+and, by convention, is referred to by a sensible name in the method. In the case of a course, this is always 'course', unless multiple courses are passed.
 
 ````ruby
 class PageOnePage
-  def do_another_thing(product)
-    @browser.h1(class: 'heading').should == prodct.data.name
+  def do_another_thing(course)
+    @browser.h1(class: 'heading').should == course.data.name
   end
 end
 ````
@@ -108,17 +94,17 @@ end
 If other parameters are required by the method, they are passed as a hash of parameters. This convention borrows from Rails and helps make it clearer what is being passed in long lists of parameters:
 
 ````ruby
-on(PageOnePage).do_another_thing(Product.last, quantity: 3, mode: 'list')
+on(PageOnePage).do_another_thing(Course.last, candidates: 3, mode: 'list')
 ````
 
-This hash of parameters is *always* referred to as `params` in the method. In the above example we can access the individual items with `params[:mode]`  or `params[:quantity]`.
+This hash of parameters is *always* referred to as `params` in the method. In the above example we can access the individual items with `params[:mode]`  or `params[:candidates]`.
 
 ````ruby
 class PageOnePage
-  def do_another_thing(product, params = {})
+  def do_another_thing(course, params = {})
     if params[:mode] == 'list'
-        @browser.h1(class: 'heading').should == prodct.data.name
-        @product.text_field(class: 'qty').set(params[:quantity])
+        @browser.h1(class: 'heading').should == course.data.name
+        @course.text_field(class: 'qty').set(params[:candidates])
     end
   end
 end
@@ -128,39 +114,6 @@ end
 
 Taking a leaf out of Rails' book, step definitions should be kept as 'skinny' as possible, delegating work to either models or page objects.
 
-## Writing Exploratory Tests
-
-The fact that we've separated 'clean' acceptance crateria scenarios from quick-and-dirty other scenarios means that we can use cucumber for writing exploratory tests or bug tests. For example, given a bug:
-
-![Bug](http://f.cl.ly/items/2Y3n1i3w1m163r0c2p3q/Screen%20Shot%202014-02-25%20at%2012.04.55.png)
-
-We could write a quick and dirty feature:
-
-![Dirty Feature](http://f.cl.ly/items/0l180N1b0q1e42460H3G/Screen%20Shot%202014-02-25%20at%2012.06.36.png)
-
-Then write some quick and dirty step definitions that describe the bug:
-
-![Dirty steps](http://f.cl.ly/items/2m3j1P0k3H0z2X220z0d/Screen%20Shot%202014-02-25%20at%2012.07.38.png)
-
-If these pass as green, we know we've accurately described the bug:
-
-````ruby
-Then(/^an error should be displayed$/) do
-  @browser.div(class: 'messages').text.should include 'Error'
-end
-````
-
-We can then refactor this to 'reverse' the assertion to the test describes the expected behaviour:
-
-````ruby
-Then(/^an error should not be displayed$/) do
-  @browser.div(class: 'messages').text.should_not include 'Error'
-end
-````
-
-We can then commit this code and pass on to the developers for fixing. The developers could either use cucumber themselves to check that the bug is fixed, or when the ticket domes back into FT, we could run `rake t @jira-ird-787` to check that the fix has worked.
-
-If it's decided that this test is worth adding to the clean features, we could refactor it to use page objects and retag it as @clean.
 
 ## Project Structure
 
@@ -181,12 +134,7 @@ If it's decided that this test is worth adding to the clean features, we could r
 |				|- dirty_pages/         Page objects used in dirty tests
 |				|- helpers/             Helper methods and overrides
 |				|- models
-|						|- basket.rb    A class for creating Basket objects (not very useful)
-|						|- category.rb  A class for creating Category objects
-|						|- koinos.rb    Helper classes for the Koinos API
-|						|- mageapi.rb   Helper classes for the Magento API
-|						|- member.rb    A class for creating Member objects
-|						`- product.rb   A class for creating Product objects
+|						`- category.rb        A class for creating Category objects
 |				|- pages                Properly-structured page objects
 |				|- env.rb               Environment settings
 |				`- hooks.rb             Global hooks and setup code
@@ -196,9 +144,6 @@ If it's decided that this test is worth adding to the clean features, we could r
 `- results/                             Contains rerun.txt and/or an HTML report.
 | 	`- screenshots/                     Contains screenshots of failed scenarios
 `- spec
-    |- koinos_spec.rb                   Contains the Koinos RSpec tests
-    |- koinos_test.rb                   A KoinosTest class for working with Koinos
-    `- spec_helper.rb                   Setup and generic methods for use in koinos tests.
 ````
 
 
@@ -212,16 +157,19 @@ This isn't set in stone, but as a guide, the following tags are recommended:
 - **@wip** - being worked on, will never execute unless explicitly called with `rake t @wip`. It's safe to commit these to trunk knowing that they won't run.
 - **@manual** - Flagged as a manual test, will never execute unless explicitly called with `rake t @manual`.
 - **@headless** - A browser will not be opened for these features or scenarios.
-- **@jira-ird-XXX** - Reference to a JIRA ticket. Ideally, all features should have this.
+- **@jira-mdl-XXX** - Reference to a JIRA ticket. Ideally, all features should have this.
 - **@slow** - The feature is particularly slow and should not be run regularly.
 - **@smoke** - executed as part of the main test suite on CI Build Server **with every commit**. This isn't currently being used (see @clean, above).
+
+
+## Lifecycle
 
 Here's an example of one lifecycle that a feature might go through:
 
 ### 1. A BA creates a feature:
 
 ````ruby
-@dirty @jira-ird-123 @not_started
+@dirty @jira-mdl-123 @not_started
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -231,7 +179,7 @@ Feature: Some Acceptance Criteria
 After tidying up the feature and making use of any generic steps, the DiT might move it to /clean and retag it:
 
 ````ruby
-@clean @jira-ird-123 @not_started
+@clean @jira-mdl-123 @not_started
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -239,7 +187,7 @@ Feature: Some Acceptance Criteria
 ### 3. A DiT starts work on it
 
 ````ruby
-@clean @jira-ird-123 @wip
+@clean @jira-mdl-123 @wip
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -249,7 +197,7 @@ Note: It's perfectly safe to commit @wip code to trunk, although in an ideal wor
 ### 4. Work on the test is finished
 
 ````ruby
-@clean @jira-ird-123
+@clean @jira-mdl-123
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -257,7 +205,7 @@ Feature: Some Acceptance Criteria
 ### 5. Once of the scenarios is really slow, so we stop it running on every commit to trunk
 
 ````ruby
-@clean @jira-ird-123 @wip
+@clean @jira-mdl-123 @wip
 Feature: Some Acceptance Criteria
 	This is a features
 
@@ -268,14 +216,6 @@ Feature: Some Acceptance Criteria
 	Scenario: A slow scenario
 		Given...
 ````
-
-## Running Koinos Tests
-
-The Koinos tests are written with RSpec, and use some of the libraries and classes that form part of the acceptance test suite, most noteably the Member class. A member is first created using UI automation on the Koinos web interface and then RSpec tests compare API returns against that.
-
-The koinos tests make extensive use of KoinosTest class, found in `spec/koinos_test.rb`. This is intended to simplify future work on koinos tests. It's API is briefly documented in the file.
-
-The koinos tests can be executed by running `rspec` in the `stories` directory. If you need to see the XML that's sent and recieved, set   `debug_api_requests: true` in `config.yml` and it will be output to STDOUT.
 
 ## Rake tasks
 
@@ -290,14 +230,7 @@ There are a number of rake tasks available, and you can always add more. Some to
 
 ## Assumptions
 
-The iRedeem test suite assumes that iRedeem has been configured in a sensible way. The actual configuration needed is far to complex to detail here, but in general:
-
-- A vendor called 'Automation Test Vendor' exists with the right ID and settings.
-- Pricebuilder is enabled and correctly configured.
-- Global settings for exchange rates etc are set up correctly.
-- Koinos is configured to allow connections from the correct IP ranges.
-- uDropship is correctly configured.
-- The Auction module is switched on and correctly configured.
+TODO
 
 ## Using IRB inside the application
 
@@ -311,6 +244,50 @@ You'll then end up isnide a pry instance, with the test environment correctly lo
 
 Needless to say, you can also start a pru instance by adding `binding.pry` anywhere in the code. This will start a pry instance at that point. [Pry-byebug](https://github.com/deivid-rodriguez/pry-byebug) is also included, so ou have access to it's commands too.
 
+## Working on a new feature of the test suite
+
+First, create a feature branch:
+
+````shell
+master$> git checkout -b my-feature
+````
+
+Then fire up the app and do some work:
+
+````shell
+my-feature$> subl .
+````
+
+Regularly test, commit and push that work to github:
+
+````shell
+my-feature$> rspec
+my-feature$> git commit -m "Some Stuff"
+my-feature$> git push
+````
+
+Then submit a pull request to the master branch (note that you'll need the hub gem installed for this to work):
+
+````shell
+my-feature$> git pull-request -b master
+````
+
+Head to GitHub to accept the pull request and merge to `master`.
+
+## Deploying to Production
+
+To deploy `master` to production:
+
+````shell
+master$> git pull
+master$> git checkout production
+production$> git pull
+production$> git merge master
+production$> git push
+master$> git checkout master
+````
+
+
 ## Commit Policy
 
 In an ideal world:
@@ -318,13 +295,6 @@ In an ideal world:
 1. Anyone can commit features to `/dirty`, but they must be tagged with a JIRA number and `@not_started`. The idea is that even BAs or developers could commit new feature files.
 2. Any QAs or Devs can commit to `/dirty_steps` and `/dirty_pages`, but they must pass locally first.
 3. Any code committed to `/clean`, whether features or ruby, must pass on CI and have been code reviewed by a another ruby developer.
-
-## Contact
-
-The majority of this framework was written by Danny Smith
-
-- twitter: [@dannysmith](https://twitter.com/dannysmith)
-- skype: [dannyasmith](skype:dannyasmith?chat)
 
 
 

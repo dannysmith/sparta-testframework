@@ -14,6 +14,8 @@ Before do
   @browser.window.resize_to(1000, 900)
   @browser.cookies.clear
 
+  @app = App.new @browser
+
   unless $setup_done
     $setup_done = true
     # This stuff will only run before the first scenario executed. Use it to set up data etc.
