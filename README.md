@@ -35,7 +35,7 @@ The features and step_definitions are logically split into two types:
 - **Clean Features** are acceptance criteria. They must always pass and are well-designed using page objects to abstract the workings of the individual pages.
 - **Dirty Features** are quick and dirty features or scenarios written by QAs or developers to test a specific part of the system. It's not expected that they always pass, as they may depend on some complex configuration and may not be written using page objects.
 
-By separating dirty features, it allows developers and QAs who are not experts at cucumber to use the tool without danger of breaking the acceptance tests running on TeamCity. If a dirty test is deemed important enough, it could be refactored and turned into clean acceptance criteria. If a dirty test fails, it could indicate that the test is broken, or that iRedeem is broken. If it transpires that a dirty test is broken, it can be tagged with @off so that it never runs, or simply deleted.
+By separating dirty features, it allows developers and QAs who are not experts at cucumber to use the tool without danger of breaking the acceptance tests running on Codeship. If a dirty test is deemed important enough, it could be refactored and turned into clean acceptance criteria. If a dirty test fails, it could indicate that the test is broken, or that iRedeem is broken. If it transpires that a dirty test is broken, it can be tagged with @off so that it never runs, or simply deleted.
 
 These dirty tests, while not run with every commit, could be run at the beginning of regression testing to indicate possible bugs for manual testers to investigate.
 
@@ -127,10 +127,8 @@ Taking a leaf out of Rails' book, step definitions should be kept as 'skinny' as
 |		|- dirty/                       Quick and dirty features for testing
 |		|- step_definitions/
 |		|		|- clean-steps/         Step definitions for clean features
-|		|		`- dirty_steps/         Step definitions for dirty features
 |		`- support
 |				|- data/                Setup and test data as YAML files
-|				|- dirty_pages/         Page objects used in dirty tests
 |				|- helpers/             Helper methods and overrides
 |				|- models
 |						`- category.rb        A class for creating Category objects
@@ -151,14 +149,14 @@ Taking a leaf out of Rails' book, step definitions should be kept as 'skinny' as
 This isn't set in stone, but as a guide, the following tags are recommended:
 
 - **@dirty** - executed as part of the 'dirty' test suite. It's expected that some of these might fail.
-- **@clean** - executed as part of the main test suite on CI Build Server. `rake production` currently executes all of these features, but when the test suite is large enough it would make sense to add a `rake regression` task to execute all @clean features, and attach this to a manual build on TeamCity. This could be run before deploying trunk to a new environment, and `rake production` could be set to run only @smoke features.
+- **@clean** - executed as part of the main test suite on CI Build Server. `rake production` currently executes all of these features, but when the test suite is large enough it would make sense to add a `rake regression` task to execute all @clean features, and attach this to a manual build on Codeship. This could be run before deploying trunk to a new environment, and `rake production` could be set to run only @smoke features.
 - **@not_started** - yet to be worked on, will never execute.
-- **@wip** - being worked on, will never execute unless explicitly called with `rake t @wip`. It's safe to commit these to trunk knowing that they won't run.
+- **@wip** - being worked on, will never execute unless explicitly called with `rake t @wip`. It's safe to commit these to master knowing that they won't run.
 - **@manual** - Flagged as a manual test, will never execute unless explicitly called with `rake t @manual`.
 - **@headless** - A browser will not be opened for these features or scenarios.
-- **@jira-mdl-XXX** - Reference to a JIRA ticket. Ideally, all features should have this.
+- **@MDL-XXX** - Reference to a JIRA story or task. Ideally, all features should have this.
 - **@slow** - The feature is particularly slow and should not be run regularly.
-- **@smoke** - executed as part of the main test suite on CI Build Server **with every commit**. This isn't currently being used (see @clean, above).
+- **@smoke** - executed as part of the main test suite on CI Build Server **with every push**. This isn't currently being used (see @clean, above).
 
 
 ## Lifecycle
@@ -168,17 +166,19 @@ Here's an example of one lifecycle that a feature might go through:
 ### 1. A BA creates a feature:
 
 ````ruby
-@dirty @jira-mdl-123 @not_started
+@dirty @MDL-123 @not_started
 Feature: Some Acceptance Criteria
 	...
 ````
+
+It may be that the Behave Pro plugin is used so BAs can create features directly in JIRA.
 
 ### 2. A Dev in Test decides that this feature should form part of the clean tests
 
 After tidying up the feature and making use of any generic steps, the DiT might move it to /clean and retag it:
 
 ````ruby
-@clean @jira-mdl-123 @not_started
+@clean @MDL-123 @not_started
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -186,7 +186,7 @@ Feature: Some Acceptance Criteria
 ### 3. A DiT starts work on it
 
 ````ruby
-@clean @jira-mdl-123 @wip
+@clean @MDL-123 @wip
 Feature: Some Acceptance Criteria
 	...
 ````
@@ -196,15 +196,15 @@ Note: It's perfectly safe to commit @wip code to trunk, although in an ideal wor
 ### 4. Work on the test is finished
 
 ````ruby
-@clean @jira-mdl-123
+@clean @MDL-123
 Feature: Some Acceptance Criteria
 	...
 ````
 
-### 5. Once of the scenarios is really slow, so we stop it running on every commit to trunk
+### 5. Once of the scenarios is really slow, so we stop it running on every commit to master
 
 ````ruby
-@clean @jira-mdl-123 @wip
+@clean @MDL-123 @wip
 Feature: Some Acceptance Criteria
 	This is a features
 
@@ -222,7 +222,7 @@ There are a number of rake tasks available, and you can always add more. Some to
 
 - `rake generate_docs` converts the REAME.md file into an HTML document.
 - `rake clean` clears out the logs and results directories. **You should run this before comitting** to avoid polluting the CI artifacts with old screenshots and reports.
-- `rake production` used by TeamCity ro execute @clean features on CI.
+- `rake production` used by Codeship ro execute @clean features on CI.
 - `rake wip` runs any features that are tagged @wip. You'll use this lots when working locally.
 - `rake t @sometag` runs a specific tag, again you'll probably use this lots when working locally.
 - `rake help` shows some details of the available tasks.

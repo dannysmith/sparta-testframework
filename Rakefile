@@ -5,6 +5,8 @@ require 'cucumber'
 require 'cucumber/rake/task'
 require 'rubocop/rake_task'
 require 'rake/clean'
+# require 'zip' # Required by 'behave'
+# require 'behave' # Incompatible with Selenium due to selenium-webdriver requiring rubyzip ~> 1.0 and behave requiring rubyzip ~> 0.9.9.
 
 # rake clean can be used to clear out old reports and screenshots
 CLEAN.include('results/rerun.txt', 'results/report.html', 'results/koinos_report.html', 'results/screenshots/*.*', 'logs/*.*')
@@ -54,6 +56,19 @@ end
 # Generates HTML docs from the readme
 task :generate_docs, "Generate HTML Documentation from the README.html" do |t|
   system 'ruby ./bin/generate_docs_from_readme.rb'
+end
+
+# Download Features from JIRA using Behave Pro
+desc "Download features from JIRA"
+task :download do
+  Behave::FeatureDownloader.new({
+    'host'   => 'https://behave.pro',
+    'user'   => 'amlyYTo2ODBmZjM0ZC1jMDIwLTQ4ODktYTFkOS1iODM0MTRmNGYwMTY=',
+    'pass'   => 'edf8ddbb35248010204767786ab2c9686d74670b',
+    'key'    => '10804',
+    'dir'    => 'features',
+    'manual' => true
+  })
 end
 
 # Show a help message
