@@ -8,4 +8,8 @@ class App
     HomePage.new @browser
   end
 
+  def test_page
+    TestPage.new @browser
+  end
+
 end
