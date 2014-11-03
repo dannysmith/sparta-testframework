@@ -9,3 +9,10 @@ Feature: Create Events
     When I go to the create event page
     And enter valid event details
     Then it should appear on the calendar
+
+  @MDL-6
+  Scenario: Creating an event without mandatory fields
+    Given I am logged in
+    When I go to the create event page
+    And enter invalid details
+    Then I should get an error message
