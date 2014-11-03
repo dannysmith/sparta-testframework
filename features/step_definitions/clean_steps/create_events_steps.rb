@@ -3,13 +3,13 @@ Given(/^I am logged in$/) do
 end
 
 When(/^I go to the create event page$/) do
-  pending 
+  @app.events.visit_create 
 end
 
 When(/^enter valid event details$/) do
-  pending
+  @app.events.create
 end
 
 Then(/^it should appear on the calendar$/) do
-  pending
+  pending #expect calendar to show created events
 end
