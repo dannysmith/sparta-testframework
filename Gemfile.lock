@@ -37,7 +37,6 @@ GEM
     multi_json (1.9.0)
     multi_test (0.0.3)
     multi_xml (0.5.5)
-    mysql2 (0.3.15)
     nokogiri (1.6.1-x86-mingw32)
       mini_portile (~> 0.5.0)
     parser (2.1.1)
@@ -78,7 +77,6 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
-    sequel (4.7.0)
     slop (3.4.7)
     slowhandcuke (0.0.3)
       cucumber
@@ -132,13 +130,11 @@ DEPENDENCIES
   cucumber
   headless
   httparty
-  mysql2
   pry
   rake
   redcarpet
   rspec (~> 2.11.0)
   rubocop
-  sequel
   slowhandcuke
   syntax
   watir

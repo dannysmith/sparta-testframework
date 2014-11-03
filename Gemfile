@@ -26,8 +26,8 @@ gem 'rubocop'
 gem 'awesome_print'
 
 # Accessing SQL Database
-gem 'mysql2'
-gem 'sequel'
+# gem 'mysql2'
+# gem 'sequel'
 
 group :development do
   # Generating documentation
