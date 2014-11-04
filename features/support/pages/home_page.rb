@@ -1,3 +1,4 @@
+require_relative 'generic'
 class HomePage < GenericPage
 
   def visit

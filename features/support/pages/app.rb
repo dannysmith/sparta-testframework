@@ -8,4 +8,7 @@ class App
     HomePage.new @browser
   end
 
+  def calendar
+    CalendarPage.new @browser
+  end
 end
