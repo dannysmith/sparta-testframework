@@ -1,11 +1,12 @@
-Given(/^there is a past event$/) do
-  pending # express the regexp above with the code you wish you had
+Given(/^I am on the calendar page$/) do
+  pending
 end
 
-When(/^I go to the calendar page$/) do
-  pending # express the regexp above with the code you wish you had
+And(/^there is a past event$/) do
+  pending
 end
 
-Then(/^I should see a past events$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see the past event$/) do
+  pending
 end
+
