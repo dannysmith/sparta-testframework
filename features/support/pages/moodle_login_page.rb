@@ -1,23 +1,21 @@
-class Moodle_Login < GenericPage
+require_relative 'generic'
+
+class MoodleLogin < GenericPage
   
-## Need to return to this to change it to use a yaml file to read in username and password fields.
   
   def login_user
-    @browser.text_field(:name, "username").set("username")
-    @browser.text_field(:name, "password").set("Abcd.1234")
+    @browser.text_field(:name, "username").set(CREDENTIALS[1][:user])
+    @browser.text_field(:name, "password").set(CREDENTIALS[1][:password])
     @browser.button(:class, "fa-angle-right").click
   end
   
   def login_admin
-    @browser.text_field(:name, "username").set("moodle")
-    @browser.text_field(:name, "password").set("soXy3zX2JTRwZCXw!")
+    @browser.text_field(:name, "username").set(CREDENTIALS[:admin][0][:user])
+    @browser.text_field(:name, "password").set(CREDENTIALS[:admin][0][:password])
     @browser.button(:class, "fa-angle-right").click
   end
   
-#  def login_teacher
-#    @browser.text_field(:name, "username").set("")
-#    @browser.text_field(:name, "password").set("")
-#    @browser.button(:class, "fa-angle-right").click
-#  end
-  
+  def login_guest
+    @browser.button(:value, "Log in as a guest").click
+  end  
 end

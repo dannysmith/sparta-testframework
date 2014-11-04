@@ -3,6 +3,7 @@ class HomePage < GenericPage
 
   def visit
     @browser.goto EnvConfig.base_url
+    @browser.maximize
   end
 
   def visit_login

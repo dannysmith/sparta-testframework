@@ -9,7 +9,7 @@ class App
   end
   
   def login
-    Moodle_Login.new @browser
+    MoodleLogin.new @browser
   end
 
 end
