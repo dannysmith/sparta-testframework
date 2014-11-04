@@ -1,14 +1,23 @@
-class Moodle_Login < HomePage
+class Moodle_Login < GenericPage
   
-  def visit_login
-    @browser.GoTo "http://unix.spartaglobal.com/moodle3/login/index.php"
-  end
+## Need to return to this to change it to use a yaml file to read in username and password fields.
   
   def login_user
-    @browser.a(:title, "Log in").click
-    @browser.text_field(:name, "username").set("user")
-    @browser.text_field(:name, "password").set("Mypassword1")
+    @browser.text_field(:name, "username").set("username")
+    @browser.text_field(:name, "password").set("Abcd.1234")
     @browser.button(:class, "fa-angle-right").click
   end
+  
+  def login_admin
+    @browser.text_field(:name, "username").set("moodle")
+    @browser.text_field(:name, "password").set("soXy3zX2JTRwZCXw!")
+    @browser.button(:class, "fa-angle-right").click
+  end
+  
+#  def login_teacher
+#    @browser.text_field(:name, "username").set("")
+#    @browser.text_field(:name, "password").set("")
+#    @browser.button(:class, "fa-angle-right").click
+#  end
   
 end

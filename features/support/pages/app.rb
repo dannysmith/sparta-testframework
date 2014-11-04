@@ -8,7 +8,7 @@ class App
     HomePage.new @browser
   end
   
-  def p_login
+  def login
     Moodle_Login.new @browser
   end
 
