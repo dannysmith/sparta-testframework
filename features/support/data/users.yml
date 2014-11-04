@@ -6,8 +6,10 @@
 
 :users:
   - :password: password
-    :initial_points: 20000  
+    :initial_points: 20000
+:normal:
   - :user: user
-    :password: Mypassword1£
+    :password: My.password1
+:admin:
   - :user: moodle
-    password: soXy3zX2JTRwZCXw!
+    :password: soXy3zX2JTRwZCXw!
