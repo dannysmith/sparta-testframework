@@ -8,6 +8,6 @@ Feature: Past Events
 	
 	@MDL-19
 	Scenario: View past events
-		Given there is a past event
-		When I go to the calendar page
-		Then I should see a past events
+		Given I am on the calendar page
+		And there is a past event
+		Then I should see the past event
