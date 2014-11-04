@@ -13,7 +13,7 @@ require 'rubocop'
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
 
 
-<<<<<<< HEAD
+
 # require 'mysql2'
 # require 'sequel'
 # DB = Sequel.connect(adapter: 'mysql2',
@@ -21,7 +21,6 @@ Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
 #                     host: EnvConfig.database_url,
 #                     database: EnvConfig.database_name,
 #                     password: EnvConfig.database_password)
-=======
 # Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
 #require 'mysql2'
 #require 'sequel'
@@ -30,7 +29,6 @@ Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
 #                    host: EnvConfig.database_url,
 #                    database: EnvConfig.database_name,
 #                    password: EnvConfig.database_password)
->>>>>>> b538095b1882956ec67616612b7df7fae5d8ab26
 
 # Set up World
 World(RSpec::Matchers)
