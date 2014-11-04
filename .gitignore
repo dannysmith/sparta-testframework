@@ -1,6 +1,9 @@
 *.DS_Store
 *.tmproj
 *~
+
 *.project
 results/screenshots/*.*
 results/rerun.txt
+
+
