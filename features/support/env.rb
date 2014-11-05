@@ -13,6 +13,14 @@ require 'rubocop'
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
 
 
+
+# require 'mysql2'
+# require 'sequel'
+# DB = Sequel.connect(adapter: 'mysql2',
+#                     user: EnvConfig.database_username,
+#                     host: EnvConfig.database_url,
+#                     database: EnvConfig.database_name,
+#                     password: EnvConfig.database_password)
 # Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
 #require 'mysql2'
 #require 'sequel'
