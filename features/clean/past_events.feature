@@ -10,4 +10,4 @@ Feature: Past Events
 	Scenario: View past events
 		Given I am on the calendar page
 		And there is a past event
-		Then I should see the past event
+		Then I should be able to choose the past event
