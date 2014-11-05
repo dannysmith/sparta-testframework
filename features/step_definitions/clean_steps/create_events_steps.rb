@@ -1,13 +1,15 @@
 Given(/^I am logged in$/) do
-  @app.login.login
+  @app.home.visit
+  binding.pry
+  #@app.login.login
 end
 
 When(/^I go to the create event page$/) do
-  @app.events.visit_create 
+  @app.calendar.visit
 end
 
 When(/^enter valid event details$/) do
-  @app.events.create
+  @app.calendar.create_event
 end
 
 Then(/^it should appear on the calendar$/) do
