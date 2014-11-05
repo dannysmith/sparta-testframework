@@ -20,8 +20,13 @@ class GenericPage
   end
     
   def goto_course_management
-    @browser.span(text: 'Site administration').click
+    @browser.span(text: 'Site administration').when_present.click
     @browser.span(text: 'Courses').when_present.click
     @browser.a(text: 'Manage courses and categories').when_present.click
+  end
+  
+  def logout
+    @browser.goto "http://unix.spartaglobal.com/moodle3/login/logout.php"
+    @browser.input(value: 'Continue').click
   end
 end

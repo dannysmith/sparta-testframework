@@ -2,6 +2,10 @@ require_relative 'generic'
 
 class MoodleCourseManagementPage < GenericPage
   
+  def visit
+    @browser.goto "http://unix.spartaglobal.com/moodle3/course/management.php"
+  end
+  
   def goto_course_creation_form
     @browser.a(text: 'Create new course').when_present.click
   end
