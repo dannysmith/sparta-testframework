@@ -13,5 +13,6 @@ When(/^enter valid event details$/) do
 end
 
 Then(/^it should appear on the calendar$/) do
-  pending #expect calendar to show created events
+  @app.calendar.visit
+  expect(@browser.text.include? "Test Event").to eq(true)
 end
