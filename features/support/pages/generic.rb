@@ -18,4 +18,8 @@ class GenericPage
   def url
     @browser.url
   end
+  
+    def logout
+    @browser.goto "http://unix.spartaglobal.com/moodle3/login/logout.php"
+  end
 end
