@@ -1,9 +1,7 @@
 Given(/^I am on the calendar page$/) do
-  require 'pry'
-  
-  @app.home.visit
-  binding.pry
-  @app.calendar.visit_calendar
+  @app.calendar.visit
+  binding.pry # Only here until login method is finished
+  # @app.login.login :user
 end
 
 And(/^there is a past event$/) do

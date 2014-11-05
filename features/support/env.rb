@@ -11,8 +11,7 @@ require 'rubocop'
 
 # Load the generic libraries in lib..
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
-
-
+CREDENTIALS = YAML.load_file('features/support/data/users.yml')
 
 # require 'mysql2'
 # require 'sequel'

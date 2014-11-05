@@ -17,5 +17,8 @@ class App
   def calendar
     CalendarPage.new @browser
   end
-
+  
+  def login
+    MoodleLogin.new @browser
+  end
 end
