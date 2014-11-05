@@ -5,8 +5,4 @@ class HomePage < GenericPage
     @browser.goto EnvConfig.base_url
   end
 
-  def visit_login
-    @browser.a(:title, "Log in").click
-  end
-
 end
