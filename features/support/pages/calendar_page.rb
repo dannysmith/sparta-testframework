@@ -5,7 +5,7 @@ require 'rspec'
 class CalendarPage < HomePage
 
   def visit
-     @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/view.php?view=month"
+    @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/view.php?view=month"
   end 
   
   def check_events
@@ -23,10 +23,11 @@ class CalendarPage < HomePage
   end
 
   def create_event
-    @browser.element(:text, "New Event")
+    @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/event.php?action=new&course"
     @browser.text_field(:id, "id_name").set "Test Event"
-    @browser.text_field(:id, "id_descriptionedittable").set "Test event description"
-    
+    @browser.select_list(:id, "id_timestart_day").select_value(10)
+    @browser.select_list(:id, "id_timestart_month").select_value(11)
+    @browser.button(:id, "id_submitbutton").click
   end
   
 private
