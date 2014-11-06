@@ -11,5 +11,9 @@ class App
   def login
     MoodleLogin.new @browser
   end
+  
+  def dashboard
+    Dashboard.new @browser
+  end
 
 end
