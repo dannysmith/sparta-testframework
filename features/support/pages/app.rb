@@ -19,5 +19,9 @@ class App
   def login_page
     MoodleLoginPage.new @browser
   end
+  
+  def course_details
+    MoodleCourseDetailsPage.new @browser
+  end
 
 end
