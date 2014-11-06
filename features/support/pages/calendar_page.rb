@@ -29,6 +29,18 @@ class CalendarPage < HomePage
     @browser.select_list(:id, "id_timestart_month").select_value(11)
     @browser.button(:id, "id_submitbutton").click
   end
+
+  def update_event_title
+    @browser.element(:title, "Edit event").click
+    @browser.text_field(:id, "id_name").set "Updated event title"
+    @browser.button(:id, "id_submitbutton").click
+  end
+
+  def update_event_date
+    @browser.element(:title, "Edit event").click
+    @browser.select_list(:id, "id_timestart_day").select_value(10)
+    @browser.select_list(:id, "id_timestart_month").select_value(11)
+  end
   
 private
   def past_events_list
