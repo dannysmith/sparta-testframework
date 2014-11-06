@@ -1,4 +1,4 @@
-Feature: Successful Login
+Feature: Logging into Moodle
   
   Scenario: Admin Login
     Given that I am on the Moodle Login Page to login as admin
@@ -12,7 +12,7 @@ Feature: Successful Login
     
   Scenario: Guest Login
     Given I am on the login page to login as a guest
-    When I select the Log in as a guest
+    When I choose to login as a guest
     Then I should be on the Guest Dashboard page
     
   Scenario: Unsuccessful Login
