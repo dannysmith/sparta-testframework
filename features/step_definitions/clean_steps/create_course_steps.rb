@@ -3,8 +3,6 @@ Given /^that I am logged in as a Teacher$/ do
   @app.homepage.visit
   
   @app.login_page.login_as :admin
-
-  
 end
 
 When /^I select the Software Testing category in the Course Management Page$/ do
