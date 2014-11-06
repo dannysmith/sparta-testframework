@@ -35,3 +35,10 @@ Feature: Course Creation
     And I set the Course to be Invisible
     Then the new course should be created
     And only an Administrator or a Teacher can view it
+  
+  @MDL-31
+  Scenario: Deleting a Course
+    Given I am on the Course and category management page
+    When I choose a course
+    And I select the delete option
+    Then the course should no longer exist
