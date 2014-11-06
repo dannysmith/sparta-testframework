@@ -35,13 +35,15 @@ class CalendarPage < HomePage
   def update_event_title
     @browser.element(:title, "Edit event").click
     @browser.text_field(:id, "id_name").set "Updated event title"
-    @browser.button(:id, "id_submitbutton").click
   end
 
   def update_event_date
+    tomorrow_day = (Date.today +1).day
+    tomorrow_month = (Date.today +1).month
     @browser.element(:title, "Edit event").click
-    @browser.select_list(:id, "id_timestart_day").select_value(10)
-    @browser.select_list(:id, "id_timestart_month").select_value(11)
+    @browser.select_list(:id, "id_timestart_day").select_value(tomorrow_day)
+    @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
+    @browser.button(:id, "id_submitbutton").click
   end
   
 private
