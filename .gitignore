@@ -2,3 +2,5 @@
 *.tmproj
 *~
 *.project
+results/screenshots/*.*
+results/rerun.txt
