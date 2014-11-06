@@ -1,5 +1,3 @@
-require_relative 'home_page'
-
 require 'date'
 require 'rspec'
 class CalendarPage < HomePage
