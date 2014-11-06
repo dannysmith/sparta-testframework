@@ -8,10 +8,11 @@ require 'watir-webdriver'
 require 'pry'
 require 'rubocop'
 
+require 'yaml'
 
 # Load the generic libraries in lib..
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
-
+POST_TITLE = YAML.load_file('features/support/data/default_product_data.yml')
 
 # Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
 require 'mysql2'
