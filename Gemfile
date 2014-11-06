@@ -29,6 +29,10 @@ gem 'awesome_print'
 # gem 'mysql2'
 # gem 'sequel'
 
+#gem 'mysql2'
+gem 'sequel'
+
+
 group :development do
   # Generating documentation
   gem 'redcarpet'

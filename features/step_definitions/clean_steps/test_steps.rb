@@ -3,7 +3,7 @@ Given(/^I am on a special page$/) do
 end
 
 When /^I am testing$/ do
-  binding.pry
+  pending
 end
 
 Given /^I am on the homepage$/ do
