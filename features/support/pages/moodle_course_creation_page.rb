@@ -3,9 +3,9 @@ require_relative 'generic'
 class MoodleCourseCreationPage < GenericPage
 
   def set_title title_type, title
-    if title_type == 'full_title'
+    if title_type == :full
       @browser.text_field(id: 'id_fullname').set(title)
-    elsif title_type == 'short_title'
+    elsif title_type == :short
       @browser.text_field(id: 'id_shortname').set(title)
     else
       raise "Title type can only either be 'full_title' or 'short_title'."
