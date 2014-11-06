@@ -1,6 +1,6 @@
 require 'date'
 require 'rspec'
-class CalendarPage < HomePage
+class CalendarPage < GenericPage
 
   def visit
     @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/view.php?view=month"

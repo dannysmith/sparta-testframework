@@ -1,6 +1,4 @@
-require_relative 'generic'
-
-<<<<<<< HEAD
+# NEEDS TO BE REFACTORED
 class MoodleLoginPage < GenericPage
   
   ADMIN_LOGIN = {username: 'moodle', password: 'soXy3zX2JTRwZCXw!'}
@@ -23,22 +21,12 @@ class MoodleLoginPage < GenericPage
     
     @browser.h2(class: 'marketingheader').wait_until_present
   end
-end
-=======
-class MoodleLogin < GenericPage
   
   def visit
     @browser.goto "http://unix.spartaglobal.com/moodle3/login/index.php"
   end
 
-# Another method used to log in. Not used because it would add more into the step definition.
-#  @app.login.user CREDENTIALS[:user][0][:user], CREDENTIALS[:user][0][:password]
-#  
-#  def login username, password
-#    @browser.text_field(:name, "username").set(username)
-#    @browser.text_field(:name, "password").set(password)
-#    @browser.button(:class, "fa-angle-right").click
-#  end
+
   
   def user
     @browser.text_field(:name, "username").set(CREDENTIALS[:normal][0][:user])
@@ -74,4 +62,3 @@ class MoodleLogin < GenericPage
     @browser.div(:class, "singlebutton").button.click
   end
 end
->>>>>>> origin/Login

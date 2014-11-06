@@ -18,7 +18,6 @@ class GenericPage
   def url
     @browser.url
   end
-<<<<<<< HEAD
     
   def goto_course_management
     @browser.span(text: 'Site administration').when_present.click
@@ -30,8 +29,4 @@ class GenericPage
     @browser.goto "http://unix.spartaglobal.com/moodle3/login/logout.php"
     @browser.input(value: 'Continue').click
   end
-=======
-  
-
->>>>>>> origin/Login
 end

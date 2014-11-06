@@ -13,14 +13,15 @@ require 'yaml'
 
 # Load the generic libraries in lib..
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
-<<<<<<< HEAD
+
 require File.dirname(__FILE__) + '/pages/generic.rb'
 Dir[File.dirname(__FILE__) + '/pages/*.rb'].each { |f| require f }
 
 # Set up World
 World(RSpec::Matchers)
-=======
+
 CREDENTIALS = YAML.load_file('features/support/data/users.yml')
+POST_TITLE = YAML.load_file('features/support/data/default_product_data.yml')
 
 # Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
 #require 'mysql2'
@@ -33,6 +34,6 @@ CREDENTIALS = YAML.load_file('features/support/data/users.yml')
 #
 ## Set up World
 #World(RSpec::Matchers)
->>>>>>> origin/Login
+
 
 
