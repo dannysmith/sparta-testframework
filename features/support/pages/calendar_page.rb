@@ -17,8 +17,7 @@ class CalendarPage < HomePage
   
   def choose_past_events
     past_events_list
-    
-    @browser.element(:text, @past_events.last).click
+    @browser.element(:text, @past_events.last).when_present.click
     expect(@browser.div(:class, "name").text).to include @past_events.last
   end
 

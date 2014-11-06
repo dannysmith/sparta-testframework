@@ -11,6 +11,8 @@ require 'rubocop'
 
 # Load the generic libraries in lib..
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
+require File.dirname(__FILE__) + '/pages/generic.rb'
+Dir[File.dirname(__FILE__) + '/pages/*.rb'].each { |f| require f }
 
 # require 'mysql2'
 # require 'sequel'
