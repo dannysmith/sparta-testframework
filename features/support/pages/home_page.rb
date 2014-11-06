@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 require_relative 'generic'
+=======
+>>>>>>> origin/Login
 
 class HomePage < GenericPage
 

@@ -7,6 +7,14 @@ class App
   def home
     HomePage.new @browser
   end
+  
+  def login
+    MoodleLogin.new @browser
+  end
+  
+  def dashboard
+    Dashboard.new @browser
+  end
 
  #TODO: Remove any superfluous methods here. All mergeed since I don;t know what's being used.
 

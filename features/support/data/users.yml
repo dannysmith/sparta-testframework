@@ -7,3 +7,15 @@
 :users:
   - :password: password
     :initial_points: 20000
+:normal:
+  - :user: user
+    :password: My.password1
+:admin:
+  - :user: moodle
+    :password: soXy3zX2JTRwZCXw!
+:incorrect_password:
+  - :user: user
+    :password: 1drossap.yM
+:incorrect_username:
+  - :user: resu
+    :password: My.password1
