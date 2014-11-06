@@ -19,7 +19,7 @@ class CalendarPage < HomePage
     past_events_list
     
     @browser.element(:text, @past_events.last).click
-    expect(@browser.text).to include "Day view"
+    expect(@browser.div(:class, "name").text).to include @past_events.last
   end
 
   def create_event
