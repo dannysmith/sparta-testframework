@@ -17,4 +17,8 @@ class MoodleCourseManagementPage < GenericPage
   def goto_course course_name
     @browser.a(text: course_name).when_present.click
   end
+  
+  def course_management_page
+    @browser.text.include?("Course and category management")
+  end
 end
