@@ -20,6 +20,6 @@ class MoodleLoginPage < GenericPage
     
     @browser.button(class: 'icon-submit fa fa-angle-right').click
     
-    @browser.span(text: 'Site administration').wait_until_present
+    @browser.h2(class: 'marketingheader').wait_until_present
   end
 end
