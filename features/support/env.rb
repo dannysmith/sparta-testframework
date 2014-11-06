@@ -14,15 +14,15 @@ require 'yaml'
 Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each { |f| require f }
 POST_TITLE = YAML.load_file('features/support/data/default_product_data.yml')
 
-# Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
-require 'mysql2'
-require 'sequel'
-DB = Sequel.connect(adapter: 'mysql2',
-                    user: EnvConfig.database_username,
-                    host: EnvConfig.database_url,
-                    database: EnvConfig.database_name,
-                    password: EnvConfig.database_password)
-
-# Set up World
-World(RSpec::Matchers)
+## Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
+#require 'mysql2'
+#require 'sequel'
+#DB = Sequel.connect(adapter: 'mysql2',
+#                    user: EnvConfig.database_username,
+#                    host: EnvConfig.database_url,
+#                    database: EnvConfig.database_name,
+#                    password: EnvConfig.database_password)
+#
+## Set up World
+#World(RSpec::Matchers)
 
