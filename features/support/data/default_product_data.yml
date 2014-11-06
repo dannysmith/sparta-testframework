@@ -6,3 +6,18 @@
 
 :course:
   :name: My Course
+
+:weekly: 
+  - :full_title: WEEKLY FULL TITLE TEST
+    :short_title: WEEKLY SHORT TITLE TEST
+
+:topics:
+  - :full_title: TOPICS FULL TITLE TEST
+    :short_title: TOPICS SHORT TITLE TEST
+
+:invisible:
+  - :full_title: INVISIBLE FULL TITLE TEST
+    :short_title: INVISIBLE SHORT TITLE TEST
+    
+:edited_title:
+  - :new_short_title: EDITED TOPICS SHORT TITLE TEST
