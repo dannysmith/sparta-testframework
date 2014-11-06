@@ -4,7 +4,7 @@ class App
     @browser = b
   end
 
-  def homepage
+  def home
     HomePage.new @browser
   end
 
@@ -19,4 +19,5 @@ class App
   def login_page
     MoodleLoginPage.new @browser
   end
+
 end
