@@ -1,6 +1,6 @@
 Given /^that I am logged in as a Teacher$/ do
 
-  @app.homepage.visit
+  @app.home.visit
   
   @app.login_page.login_as :admin
 end
@@ -59,7 +59,7 @@ Then /^the new course should be created$/ do
 end
     
 And /^it should appear in the course list bearing its intended details$/ do
-  @app.homepage.goto_course_management
+  @app.home.goto_course_management
   
   @app.course_mgmt.expand_software_testing_category
 
@@ -94,11 +94,11 @@ When /^I set the Course to be Invisible$/ do
 end
 
 And /^only an Administrator or a Teacher can view it$/ do
-  @app.homepage.visit
+  @app.home.visit
   
   expect(@browser.a(text: 'INVISIBLE FULL TITLE TEST').exists?).to be true
   
-  @app.homepage.logout
+  @app.home.logout
   
   @app.login_page.login :student
 
