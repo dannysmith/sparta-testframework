@@ -2,18 +2,17 @@ Given /^that I am logged in as a Teacher$/ do
 
   @app.homepage.visit
   
-  @app.login_page.login 'admin'
+  @app.login_page.login_as :admin
+
+  
 end
 
-And /^I am in the Course and category management page$/ do
+When /^I select the Software Testing category in the Course Management Page$/ do
   @app.course_mgmt.visit
-end
-
-Given /^I select the Software Testing category$/ do
   @app.course_mgmt.expand_software_testing_category
 end
 
-When /^I choose to create a new course$/ do
+And /^I choose to create a new course$/ do
   @app.course_mgmt.goto_course_creation_form
 end
 
@@ -23,26 +22,26 @@ end
 
 And /^I enter the Full Title for the Course$/ do
   
-  if @visibility == 'invisible'
-    @app.course_creation.set_title 'full_title', 'INVISIBLE FULL TITLE TEST'
+  if @visibility == :invisible
+    @app.course_creation.set_title :full, POST_TITLE[:invisible][0][:full_title]
   else
     if @course_format == :topics
-      @app.course_creation.set_title 'full_title', 'TOPICS FULL TITLE TEST'
+      @app.course_creation.set_title :full, POST_TITLE[:topics][0][:full_title]
     else
-      @app.course_creation.set_title 'full_title', 'WEEKLY FULL TITLE TEST'
+      @app.course_creation.set_title :full, POST_TITLE[:weekly][0][:full_title]
     end
   end
 end
 
 And /^I enter the Short Title for the Course$/ do
   
-  if @visibility == 'invisible'
-    @app.course_creation.set_title 'short_title', 'INVISIBLE SHORT TITLE TEST'
+  if @visibility == :invisible
+    @app.course_creation.set_title :short, POST_TITLE[:invisible][0][:short_title]
   else
     if @course_format == :topics
-      @app.course_creation.set_title 'short_title', 'TOPICS SHORT TITLE TEST'
+      @app.course_creation.set_title :short, POST_TITLE[:topics][0][:short_title]
     else
-      @app.course_creation.set_title 'short_title', 'WEEKLY SHORT TITLE TEST'
+      @app.course_creation.set_title :short, POST_TITLE[:weekly][0][:short_title]
     end
   end
 end
@@ -66,7 +65,7 @@ And /^it should appear in the course list bearing its intended details$/ do
   
   @app.course_mgmt.expand_software_testing_category
 
-  if @visibility == 'invisible'
+  if @visibility == :invisible
     @app.course_mgmt.goto_course 'INVISIBLE FULL TITLE TEST'
     
     expect(@browser.div(class: /\w*fullname/).when_present.text).to include('INVISIBLE FULL TITLE TEST')
@@ -93,7 +92,7 @@ end
 
 When /^I set the Course to be Invisible$/ do
   @app.course_creation.set_visibility_to '0'
-  @visibility = 'invisible'
+  @visibility = :invisible
 end
 
 And /^only an Administrator or a Teacher can view it$/ do
@@ -103,7 +102,7 @@ And /^only an Administrator or a Teacher can view it$/ do
   
   @app.homepage.logout
   
-  @app.login_page.login 'student'
+  @app.login_page.login :student
 
   # don't expect the student to see the invisible course
   expect(@browser.a(text: 'INVISIBLE FULL TITLE TEST').exists?).to be false
