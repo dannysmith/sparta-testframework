@@ -9,7 +9,7 @@ class App
   end
   
   def login
-    MoodleLogin.new @browser
+    MoodleLoginPage.new @browser
   end
   
   def dashboard
@@ -25,10 +25,6 @@ class App
 
   def calendar
     CalendarPage.new @browser
-  end
-
-  def login
-    MoodleLogin.new @browser
   end
 
   def course_creation
