@@ -11,6 +11,7 @@ class CalendarPage < GenericPage
   end
   
   def choose_past_events
+
     past_events_list_current
     @browser.element(:text, @past_events_current.last).click
     expect(@browser.div(:class, "name").text).to include @past_events_current.last
@@ -35,10 +36,16 @@ class CalendarPage < GenericPage
   def update_event_date
     tomorrow_day = (Date.today +1).day
     tomorrow_month = (Date.today +1).month
-    @browser.element(:title, "Edit event").click
-    @browser.select_list(:id, "id_timestart_day").select_value(tomorrow_day)
-    @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
-    @browser.button(:id, "id_submitbutton").click
+    if (@browser.url.include? "event") == true
+      @browser.select_list(:id, "id_timestart_day").select_value(tomorrow_day)
+      @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
+      @browser.button(:id, "id_submitbutton").click
+    else
+      @browser.element(:title, "Edit event").click
+      @browser.select_list(:id, "id_timestart_day").select_value(tomorrow_day)
+      @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
+      @browser.button(:id, "id_submitbutton").click
+    end
   end
   
   def delete_event
