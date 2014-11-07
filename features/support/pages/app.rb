@@ -37,5 +37,9 @@ class App
   def course_details
     MoodleCourseDetailsPage.new @browser
   end
+  
+  def course_editing
+    MoodleCourseEditingPage.new @browser
+  end
 
 end
