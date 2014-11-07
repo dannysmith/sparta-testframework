@@ -11,6 +11,7 @@ class CalendarPage < GenericPage
   end
 
   def choose_past_events
+
     past_events_list_current
     past_events_list_current_length
     if @events_list_current_length > 0
