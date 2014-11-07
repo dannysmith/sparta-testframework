@@ -1,5 +1,3 @@
-require_relative 'generic'
-
 class MoodleCourseDetailsPage < GenericPage
 
   def course_title

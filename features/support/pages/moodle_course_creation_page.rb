@@ -1,5 +1,3 @@
-require_relative 'generic'
-
 class MoodleCourseCreationPage < GenericPage
 
   def set_title title_type, title

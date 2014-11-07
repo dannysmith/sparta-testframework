@@ -1,5 +1,3 @@
-require_relative 'generic'
-
 class Dashboard < GenericPage
   def site_admin
     @browser.text.include?("Site Admin")

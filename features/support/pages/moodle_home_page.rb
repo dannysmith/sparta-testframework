@@ -1,5 +1,3 @@
-require_relative 'generic'
-
 class MoodleHomePage < GenericPage
   
   def visit
