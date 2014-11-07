@@ -11,17 +11,18 @@ class MoodleLoginPage < GenericPage
     if user_type == :admin
       @browser.text_field(name: 'username').set(CREDENTIALS[:admin][0][:user])
       @browser.text_field(name: 'password').set(CREDENTIALS[:admin][0][:password])
+      
+      @browser.button(class: 'icon-submit fa fa-angle-right').click
     elsif user_type == :student
       @browser.text_field(name: 'username').set(CREDENTIALS[:normal][0][:user])
       @browser.text_field(name: 'password').set(CREDENTIALS[:normal][0][:password])
+      
+      @browser.button(class: 'icon-submit fa fa-angle-right').click
     elsif user_type == :guest
       @browser.button(:value, "Log in as a guest").click
-      @browser.h2(class: 'marketingheader').wait_until_present
     else
       raise "User type can only be 'admin' or 'student'."
     end
-    
-    @browser.button(class: 'icon-submit fa fa-angle-right').click
     
     @browser.h2(class: 'marketingheader').wait_until_present
   end
