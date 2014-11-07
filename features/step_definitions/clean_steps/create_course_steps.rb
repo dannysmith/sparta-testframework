@@ -56,26 +56,26 @@ Then /^the new course should be created$/ do
 end
     
 And /^it should appear in the course list bearing its intended details$/ do
-  @app.home.goto_course_management
+  @app.course_mgmt.visit
   
   @app.course_mgmt.expand_software_testing_category
 
   if @visibility == :invisible
-    @app.course_mgmt.goto_course 'INVISIBLE FULL TITLE TEST'
+    @app.course_mgmt.goto_course POST_TITLE[:invisible][0][:full_title]
     
     expect(@browser.div(class: /\w*fullname/).when_present.text).to include(POST_TITLE[:invisible][0][:full_title])
     expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:invisible][0][:short_title])
     
   else
     if @course_format == :topics
-      @app.course_mgmt.goto_course 'TOPICS FULL TITLE TEST'
+      @app.course_mgmt.goto_course POST_TITLE[:topics][0][:full_title]
 
       expect(@browser.div(class: /\w*fullname/).when_present.text).to include(POST_TITLE[:topics][0][:full_title])
       expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:topics][0][:short_title])
 
       expect(@browser.div(class: /\w*format/).when_present.text).to include('Topics format')
     else
-      @app.course_mgmt.goto_course 'WEEKLY FULL TITLE TEST'
+      @app.course_mgmt.goto_course POST_TITLE[:weekly][0][:full_title]
 
       expect(@browser.div(class: /\w*fullname/).when_present.text).to include(POST_TITLE[:weekly][0][:full_title])
       expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:weekly][0][:short_title])
@@ -93,12 +93,12 @@ end
 And /^only an Administrator or a Teacher can view it$/ do
   @app.home.visit
   
-  expect(@browser.a(text: 'INVISIBLE FULL TITLE TEST').exists?).to be true
+  expect(@browser.a(text: POST_TITLE[:invisible][0][:full_title]).exists?).to be true
   
   @app.home.logout
   
   @app.login_page.login_as :student
 
   # don't expect the student to see the invisible course
-  expect(@browser.a(text: 'INVISIBLE FULL TITLE TEST').exists?).to be false
+  expect(@browser.a(text: POST_TITLE[:invisible][0][:full_title]).exists?).to be false
 end
