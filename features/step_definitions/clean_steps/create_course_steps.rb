@@ -1,5 +1,5 @@
 Given /^that I am logged in as a Teacher$/ do
-  @app.login_page.login_as_admin
+  @app.login_page.login_as :admin
 end
 
 When /^I select the Software Testing category in the Course Management Page$/ do
@@ -101,28 +101,4 @@ And /^only an Administrator or a Teacher can view it$/ do
 
   # don't expect the student to see the invisible course
   expect(@browser.a(text: 'INVISIBLE FULL TITLE TEST').exists?).to be false
-end
-
-
-Given(/^I am on the Course and category management page$/) do
-  @app.course_mgmt.visit
-  
-  expect(@app.course_mgmt.course_management_page).to be true
-  expect(@browser.url).to eq("http://unix.spartaglobal.com/moodle3/course/management.php")
-end
-
-When(/^I choose a course$/) do
-  @app.course_mgmt.expand_software_testing_category
-  
-  @app.course_mgmt.goto_course 'WEEKLY FULL TITLE TEST'
-  
-  expect(@app.course_details.course_title).to eq("WEEKLY FULL TITLE TEST")
-end
-
-When(/^I select the delete option$/) do
-  @app.course_details.delete_course
-end
-
-Then(/^the course should no longer exist$/) do
-  binding.pry
 end
