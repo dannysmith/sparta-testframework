@@ -1,0 +1,3 @@
+class RegistrationPage > GenericPage
+  
+end
