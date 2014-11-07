@@ -1,13 +1,4 @@
-Given(/^I am on a calendar day with events$/) do
-  @app.calendar.visit
-  binding.pry # Only here until login method is finished
-  # @app.login.login :user
-end
-
-When(/^I choose to delete the events$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^I should no longer see the event$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I should be able to delete the event$/) do
+  @app.calendar.delete_event
+  expect(@events_list_current_length > @events_list_deleted_length).to be(true)
 end

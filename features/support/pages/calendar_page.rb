@@ -11,13 +11,11 @@ class CalendarPage < HomePage
   def check_events
             
     past_events_list
-
     expect(@past_events.empty?).to be(false)
   end
   
   def choose_past_events
     past_events_list
-    
     @browser.element(:text, @past_events.last).click
     expect(@browser.div(:class, "name").text).to include @past_events.last
   end
@@ -32,6 +30,22 @@ class CalendarPage < HomePage
     @browser.button(:id, "id_submitbutton").click
   end
   
+  def delete_event
+    past_events_list
+    past_events_list_current_length
+    @browser.element(:title, "Delete event").click
+    @browser.button(:type, "submit").click
+    visit
+  end
+  
+  def past_events_list_current_length
+    @events_list_current_length = @past_events.length
+  end
+  
+  def past_events_list_deleted_length
+    @events_list_deleted_length = @past_events.length  
+  end
+   
 private
   def past_events_list
     today = Date.today.day
