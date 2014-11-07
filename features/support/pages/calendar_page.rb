@@ -37,7 +37,6 @@ class CalendarPage < GenericPage
     visit
     past_events_list_deleted
     past_events_list_deleted_length
-    binding.pry
     expect(@events_list_current_length > @events_list_deleted_length).to be(true)
   end
   
