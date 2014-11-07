@@ -21,3 +21,7 @@
     
 :edited_title:
   - :new_short_title: EDITED TOPICS SHORT TITLE TEST
+  
+:course_to_be_assigned:
+  - :full_title: ASSIGNED FULL TITLE TEST
+    :short_title: ASSIGNED SHORT TITLE TEST

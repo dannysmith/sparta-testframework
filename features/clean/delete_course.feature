@@ -1,17 +1,12 @@
- Feature: Deleting Courses
-  As an administrator 
-  I want to delete obsolete courses
-  So that they cannot be seen anymore
+Feature: Deleting a Course
 
-  - Confirmation box should appear before deletion
-
-  Background:
-    Given I am logged in
-    And a course already exists
-
-  @MDL-31
-  Scenario: Deleting a Course
-    Given I am on the "Course and category management" page
-    When I choose a course
-    And I select the delete option
-    Then the course should no longer exist
+Background:
+    Given that I am logged in as a Teacher
+    And there is a course called Obsolete Course in the Software Testing category
+    
+  @MDL-15 @clean
+  Scenario: Deleting an Obsolete Course
+    When I select the Software Testing category in the Course Management Page
+    And I choose to delete the Obsolete Course
+    Then it should be deleted
+    And it should not appear within the Software Testing category anymore

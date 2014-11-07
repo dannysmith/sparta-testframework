@@ -1,55 +1,37 @@
 # NEEDS TO BE REFACTORED
 class MoodleLoginPage < GenericPage
   
-  ADMIN_LOGIN = {username: 'moodle', password: 'soXy3zX2JTRwZCXw!'}
-  STUDENT_LOGIN = {username: "user", password: "My.password1"}
+  def visit
+    @browser.goto "http://unix.spartaglobal.com/moodle3/login/index.php"
+  end
   
   def login_as user_type
-    @browser.a(text: 'Log in').click
+    visit
     
     if user_type == :admin
-      @browser.text_field(name: 'username').set(ADMIN_LOGIN[:username])
-      @browser.text_field(name: 'password').set(ADMIN_LOGIN[:password])
+      @browser.text_field(name: 'username').set(CREDENTIALS[:admin][0][:user])
+      @browser.text_field(name: 'password').set(CREDENTIALS[:admin][0][:password])
+      
+      @browser.button(class: 'icon-submit fa fa-angle-right').click
     elsif user_type == :student
-      @browser.text_field(name: 'username').set(STUDENT_LOGIN[:username])
-      @browser.text_field(name: 'password').set(STUDENT_LOGIN[:password])
+      @browser.text_field(name: 'username').set(CREDENTIALS[:normal][0][:user])
+      @browser.text_field(name: 'password').set(CREDENTIALS[:normal][0][:password])
+      
+      @browser.button(class: 'icon-submit fa fa-angle-right').click
+    elsif user_type == :guest
+      @browser.button(:value, "Log in as a guest").click
     else
       raise "User type can only be 'admin' or 'student'."
     end
     
-    @browser.button(class: 'icon-submit fa fa-angle-right').click
-    
     @browser.h2(class: 'marketingheader').wait_until_present
   end
-  
-  def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/login/index.php"
-  end
-
-
-  
-  def user
-    @browser.text_field(:name, "username").set(CREDENTIALS[:normal][0][:user])
-    @browser.text_field(:name, "password").set(CREDENTIALS[:normal][0][:password])
-    @browser.button(:class, "fa-angle-right").click
-  end
-  
-  def admin
-    @browser.text_field(:name, "username").set(CREDENTIALS[:admin][0][:user])
-    @browser.text_field(:name, "password").set(CREDENTIALS[:admin][0][:password])
-    @browser.button(:class, "fa-angle-right").click
-  end
-  
-  def guest
-    @browser.button(:value, "Log in as a guest").click
-  end  
   
   def wrong_password
     @browser.text_field(:name, "username").set(CREDENTIALS[:incorrect_password][0][:user])
     @browser.text_field(:name, "password").set(CREDENTIALS[:incorrect_password][0][:password])
     @browser.button(:class, "fa-angle-right").click
   end
-  
   
   def wrong_username
     @browser.text_field(:name, "username").set(CREDENTIALS[:incorrect_username][0][:user])
