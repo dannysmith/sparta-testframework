@@ -3,7 +3,7 @@ Feature: Create Events
   I want to be able to create events
   So that I can invite people to them
 
-  @MDL-6
+  @MDL-3
   Scenario: Creating an event
     Given I am logged in 
     When I go to the create event page
