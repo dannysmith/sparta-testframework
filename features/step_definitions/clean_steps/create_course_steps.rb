@@ -1,8 +1,5 @@
 Given /^that I am logged in as a Teacher$/ do
-
-  @app.home.visit
-  
-  @app.login_page.login_as :admin
+  @app.login_page.login_as_admin
 end
 
 When /^I select the Software Testing category in the Course Management Page$/ do
