@@ -3,8 +3,8 @@ Feature: Delete Events
   I want to be able to delete events
   So that out of date events can be deleted
 
-  @MDL-44
+  @MDL-20 @wip
   Scenario: Event deletion
-    Given I am on a calendar day with events
-    When I choose to delete the events
-    Then I should no longer see the event
+    Given I am on the calendar page
+    Then I should be able to choose the past event
+    Then I should be able to delete the event
