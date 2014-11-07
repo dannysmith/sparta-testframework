@@ -1,6 +1,6 @@
 Given(/^I am on the calendar page$/) do
   @app.calendar.visit
-  binding.pry # Only here until login method is finished
+  # binding.pry # Only here until login method is finished
   # @app.login.login :user
 end
 
