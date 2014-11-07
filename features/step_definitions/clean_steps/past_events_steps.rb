@@ -1,7 +1,6 @@
 Given(/^I am on the calendar page$/) do
+  @app.login_page.login_as :student
   @app.calendar.visit
-  # binding.pry # Only here until login method is finished
-  # @app.login.login :user
 end
 
 And(/^there is a past event$/) do
