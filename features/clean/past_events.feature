@@ -6,7 +6,7 @@ Feature: Past Events
 	- Past events are still listed on the calendar for its respective date 
 	- Past events are still accessible to view in detail
 	
-	@MDL-19 @clean
+	@MDL-19 @wip
 	Scenario: View past events
 		Given I am on the calendar page
 		And there is a past event
