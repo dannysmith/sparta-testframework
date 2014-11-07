@@ -16,6 +16,8 @@ Before do
 
   @app = App.new @browser
 
+
+
   unless $setup_done
     $setup_done = true
     # This stuff will only run before the first scenario executed. Use it to set up data etc.
@@ -50,6 +52,11 @@ at_exit do
   end
 end
 
-
+def email_deletion
+  @app.registration.login_email
+  @app.registration.email_load_timex
+  @browser.div(:class, "T-Jo-auh").click
+  @browser.div(:class, "ar9 T-I-J3 J-J5-Ji").click
+end
 
 
