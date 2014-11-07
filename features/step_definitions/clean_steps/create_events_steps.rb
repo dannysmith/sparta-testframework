@@ -1,7 +1,6 @@
 Given(/^I am logged in$/) do
   @app.home.visit
-  binding.pry
-  #@app.login.login
+  @app.login_page.login_as :admin
 end
 
 When(/^I go to the create event page$/) do

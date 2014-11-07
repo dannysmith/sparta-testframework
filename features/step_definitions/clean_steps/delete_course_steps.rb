@@ -1,8 +1,4 @@
-Given(/^I am logged in$/) do
-  @app.home.visit
-  binding.pry
-  #@app.login.login :admin
-end
+
 
 Given(/^a course already exists$/) do
   pending # express the regexp above with the code you wish you had
