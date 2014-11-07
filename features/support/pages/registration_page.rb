@@ -19,7 +19,7 @@ class RegistrationPage < GenericPage
     @browser.button(:id, "id_submitbutton").click  
   end
 
-  def check_registration
+  def login_email
     @browser.goto "mail.google.com"
     @browser.text_field(:id, "Email").set EMAIL
     @browser.text_field(:id, "Passwd").set PASSWORD
