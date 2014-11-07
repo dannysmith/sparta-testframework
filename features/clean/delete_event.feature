@@ -6,7 +6,6 @@ Feature: Delete Events
   @MDL-44
   Scenario: Event deletion
     Given I am on the calendar page
-	And there is a past event
 	Then I should be able to choose the past event
 	Then I should be able to delete the event
 	
