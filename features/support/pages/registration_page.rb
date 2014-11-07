@@ -1,5 +1,6 @@
 class RegistrationPage < GenericPage
 
+  #refactor into user.yml file
   EMAIL = "testingcircle.test@gmail.com"
   PASSWORD = "Derek.password1"
 
