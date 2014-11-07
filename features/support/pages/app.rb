@@ -8,10 +8,6 @@ class App
     HomePage.new @browser
   end
   
-  def login
-    MoodleLogin.new @browser
-  end
-  
   def dashboard
     Dashboard.new @browser
   end
@@ -22,13 +18,8 @@ class App
     TestPage.new @browser
   end
 
-
   def calendar
     CalendarPage.new @browser
-  end
-
-  def login
-    MoodleLogin.new @browser
   end
 
   def course_creation
