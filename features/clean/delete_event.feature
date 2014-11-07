@@ -6,5 +6,6 @@ Feature: Delete Events
   @MDL-20 @wip
   Scenario: Event deletion
     Given I am on the calendar page
-    Then I should be able to choose the past event
-    Then I should be able to delete the event
+	Then I should be able to choose the past event
+	Then I should be able to delete the event
+	
