@@ -6,7 +6,7 @@ Given(/^that I am on the Moodle Login Page to login as admin$/) do
 end
 
 When(/^I log into Moodle as an Admin$/) do
-  @app.login.admin
+  @app.login.login_as_admin
 
   expect(@app.dashboard.admin).to eq("Admin User") 
 end
@@ -16,9 +16,6 @@ Then(/^I should be on the Admin Dashboard page$/) do
   @app.login.logout
 end
 
-
-
-
 Given(/^that I am on the login page to login as a user$/) do
   @app.login.visit
 
@@ -26,7 +23,7 @@ Given(/^that I am on the login page to login as a user$/) do
 end
 
 When(/^I log into Moodle as an user$/) do
-  @app.login.user
+  @app.login.login_as_user
   
   expect(@app.dashboard.user).to eq("Aaron Muir")
 end
