@@ -18,6 +18,12 @@ class App
     Dashboard.new @browser
   end
 
+  def register
+    RegistrationPage.new @browsers
+  end
+
+ #TODO: Remove any superfluous methods here. All mergeed since I don;t know what's being used.
+
   def test_page
     TestPage.new @browser
   end
