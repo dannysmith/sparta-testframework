@@ -13,10 +13,8 @@ class CalendarPage < GenericPage
   def choose_past_events
     past_events_list_current
     past_events_list_current_length
-
     if @events_list_current_length > 0
       @browser.a(:text, @past_events_current.last).when_present.click
-
       expect(@browser.div(:class, "name").text).to include @past_events_current.last
       visit
     elsif
