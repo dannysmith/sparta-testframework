@@ -1,5 +1,5 @@
 # NEEDS TO BE REFACTORED
-class MoodleLoginPage < GenericPage
+class LoginPage < GenericPage
   
   def visit
     @browser.goto "http://unix.spartaglobal.com/moodle3/login/index.php"
@@ -39,8 +39,4 @@ class MoodleLoginPage < GenericPage
     @browser.button(:class, "fa-angle-right").click
   end
   
-  def logout
-    @browser.goto "http://unix.spartaglobal.com/moodle3/login/logout.php"
-    @browser.div(:class, "singlebutton").button.click
-  end
 end

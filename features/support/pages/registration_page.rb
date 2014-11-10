@@ -5,7 +5,7 @@ class RegistrationPage < GenericPage
   PASSWORD = "Derek.password1"
 
   def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/login/signup.php"
+    @browser.goto "#{EnvConfig.base_url}/login/signup.php"
   end
 
   def complete_registration

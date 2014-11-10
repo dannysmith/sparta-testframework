@@ -1,4 +1,4 @@
-class MoodleCourseDetailsPage < GenericPage
+class CourseDetailsPage < GenericPage
 
   def course_title
     @browser.h3(:id, "course-detail-title").text

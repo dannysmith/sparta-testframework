@@ -1,4 +1,4 @@
-class MoodleEnrolledUsersPage < GenericPage
+class EnrolledUsersPage < GenericPage
   def enrol name
     
     @browser.input(value: 'Enrol users', index: 1).click

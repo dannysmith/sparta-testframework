@@ -6,8 +6,7 @@ class CalendarPage < GenericPage
   def visit
     @browser.goto "#{EnvConfig.base_url}/calendar/view.php?view=month"
   end 
-  
->>>>>>> refactor changes
+
   def check_events
     past_events_list_current
     expect(@past_events_current.empty?).to be(false)
@@ -29,7 +28,7 @@ class CalendarPage < GenericPage
   def create_event
     yesterday_day = Date.today.prev_day.day
     yesterday_month = Date.today.prev_day.month
-    @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/event.php?action=new&course"
+    @browser.goto "#{EnvConfig.base_url}/calendar/event.php?action=new&course"
     @browser.text_field(:id, "id_name").set "Test Event"
     @browser.select_list(:id, "id_timestart_day").select_value(yesterday_day)
     @browser.select_list(:id, "id_timestart_month").select_value(yesterday_month)
