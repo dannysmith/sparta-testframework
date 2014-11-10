@@ -1,11 +1,14 @@
 And /^I create a new course within this category$/ do
-  @app.course_mgmt.goto_course_creation_form
   
-  @app.course_creation.set_title :full, POST_TITLE[:course_to_be_assigned][0][:full_title]
-  
-  @app.course_creation.set_title :short, POST_TITLE[:course_to_be_assigned][0][:short_title]
-  
-  @app.course_creation.create_course
+  if !@browser.a(text: POST_TITLE[:course_to_be_assigned][0][:full_title]).exists?
+    @app.course_mgmt.goto_course_creation_form
+
+    @app.course_creation.set_title :full, POST_TITLE[:course_to_be_assigned][0][:full_title]
+
+    @app.course_creation.set_title :short, POST_TITLE[:course_to_be_assigned][0][:short_title]
+
+    @app.course_creation.create_course
+  end
 end
   
 Then /^this course should be successfully created$/ do
