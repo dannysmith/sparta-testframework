@@ -43,4 +43,8 @@ class App
     EnrolledUsersPage.new @browser
   end
 
+  def course_enrollment
+    MoodleCourseEnrollmentPage.new @browser
+  end
+  
 end
