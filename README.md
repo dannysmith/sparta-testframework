@@ -28,6 +28,10 @@ echo "Running the rake task..."
 CONFIG=ci HEADLESS=true bundle exec rake production
 ````
 
+### Test Setup
+The registration automation is dependant on the test user not already existing in the database and the test email being empty. 
+If you are using gmail for the test email then there are instructions in the wiki on how to setup automated email deletion.
+
 ## Strategy
 
 The features and step_definitions are logically split into two types:
