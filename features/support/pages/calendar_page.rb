@@ -11,11 +11,10 @@ class CalendarPage < GenericPage
   end
   
   def choose_past_events
+    past_events_list
+    @browser.element(:text, "#{@past_events.last}").click
+    expect(@browser.div(:class, "name").when_present.text).to include @past_events.last
 
-    past_events_list_current
-    @browser.element(:text, @past_events_current.last).click
-    expect(@browser.div(:class, "name").text).to include @past_events_current.last
-    visit
   end
 
   def create_event
