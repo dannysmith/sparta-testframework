@@ -30,6 +30,6 @@ Then /^that user should have Teacher privileges settings for this course$/ do
   
   # Goto the course in which Aaron was assigned as a Teacher to 
   @browser.goto "http://unix.spartaglobal.com/moodle3/course/view.php?id=77"
-  
+
   expect(@browser.li(text: 'Turn editing on').exists?).to be true
 end
