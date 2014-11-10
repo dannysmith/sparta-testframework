@@ -3,18 +3,23 @@ require 'rspec'
 class CalendarPage < GenericPage
   def visit
     @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/view.php?view=month"
-  end 
-  
+  end
+
   def check_events
     past_events_list_current
     expect(@past_events_current.empty?).to be(false)
   end
-  
+
   def choose_past_events
     past_events_list_current
-    @browser.element(:text, @past_events_current.last).click
-    expect(@browser.div(:class, "name").text).to include @past_events_current.last
-    visit
+    past_events_list_current_length
+    if @events_list_current_length > 0
+      @browser.a(:text, @past_events_current.last).when_present.click
+      expect(@browser.div(:class, "name").text).to include @past_events_current.last
+      visit
+    elsif
+      raise "There are no past events, please create one"
+    end
   end
 
   def create_event
@@ -40,45 +45,45 @@ class CalendarPage < GenericPage
     @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
     @browser.button(:id, "id_submitbutton").click
   end
-  
+
   def delete_event
     past_events_list_current
     past_events_list_current_length
-    @browser.element(:text, @past_events_current.last).click
-    @browser.element(:title, "Delete event").click
+    @browser.a(:text, @past_events_current.last).when_present.click
+    @browser.element(:title, "Delete event").when_present.click
     @browser.button(:type, "submit").click
     visit
     past_events_list_deleted
     past_events_list_deleted_length
     expect(@events_list_current_length > @events_list_deleted_length).to be(true)
   end
-  
+
   def past_events_list_current_length
     @events_list_current_length = @past_events_current.length
   end
-  
+
   def past_events_list_deleted_length
-    @events_list_deleted_length = @past_events_deleted.length  
+    @events_list_deleted_length = @past_events_deleted.length
   end
-   
+
 private
- # These two are being duplicated purely because the variables were overwriting each others. 
+ # These two are being duplicated purely because the variables were overwriting each others.
  # If you can figure out a more 'eloquent' way please do!
   def past_events_list_current
     yesterday = Date.today.prev_day.day
     calendar = @browser.table(:class, "calendarmonth calendartable")
     @past_events_current = []
-    
+
     rows = calendar.trs
     rows.each_with_index do |row,i|
       next if i == 0
-       
+
        cells = row.tds
-       
+
        cells.each do |cell|
          if cell.text.to_i <= yesterday && cell.text.to_i != 0 && cell.li.exists?
            cell_events = cell.lis
-           
+
            cell_events.each do |event|
              @past_events_current.push(event.text)
            end
@@ -86,7 +91,7 @@ private
        end
      end
    end
-   
+
    def past_events_list_deleted
     yesterday = Date.today.prev_day.day
     calendar = @browser.table(:class, "calendarmonth calendartable")
@@ -94,13 +99,13 @@ private
     rows = calendar.trs
     rows.each_with_index do |row,i|
       next if i == 0
-       
+
        cells = row.tds
-       
+
        cells.each do |cell|
          if cell.text.to_i <= yesterday && cell.text.to_i != 0 && cell.li.exists?
            cell_events = cell.lis
-           
+
            cell_events.each do |event|
              @past_events_deleted.push(event.text)
            end
