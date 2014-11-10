@@ -20,6 +20,10 @@ Then /^this course should be successfully created$/ do
 end
 
 When /^I successfully assign a user to be the Teacher for this newly created course$/ do
+  @app.course_mgmt.visit
+  
+  @app.course_mgmt.expand_software_testing_category
+  
   @app.course_mgmt.click_on :enrolled_users
   
   @app.enrolled_users.enrol 'Aaron Muir'
