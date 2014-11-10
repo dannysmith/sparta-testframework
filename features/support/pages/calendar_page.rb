@@ -6,7 +6,7 @@ class CalendarPage < GenericPage
   def visit
     @browser.goto "#{EnvConfig.base_url}/calendar/view.php?view=month"
   end 
-
+  
   def check_events
     past_events_list_current
     expect(@past_events_current.empty?).to be(false)
