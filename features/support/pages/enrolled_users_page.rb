@@ -21,7 +21,7 @@ class EnrolledUsersPage < GenericPage
     
     enrolled_users_list.each do |enrolled_user|
       if enrolled_user.td(class: 'field col_userdetails cell c0').div(class: /\w*_firstname/).text.include? name
-        enrolled_user.td(class: 'field col_role cell c2').div.a.click
+        enrolled_user.td(class: 'field col_role cell c2').div.a.when_present.click
         
         @browser.input(value: 'Teacher').when_present.click
         
