@@ -1,7 +1,4 @@
 class App
-
-   # TODO: Remove any superfluous methods here. All mergeed since I don;t know what's being used.
-
   def initialize(b)
     @browser = b
   end
@@ -10,22 +7,12 @@ class App
     HomePage.new @browser
   end
 
-  # def login
-  #   MoodleLoginPage.new @browser
-  # end
-
   def dashboard
     Dashboard.new @browser
   end
 
   def registration
     RegistrationPage.new @browser
-  end
-
- #TODO: Remove any superfluous methods here. All mergeed since I don;t know what's being used.
-
-  def test_page
-    TestPage.new @browser
   end
 
   def calendar
