@@ -22,14 +22,6 @@ And /^I successfully assign a user to be the Teacher for this newly created cour
   @app.course_mgmt.expand_software_testing_category
   
   @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
-end
-
-When /^I successfully assign a user to be the Teacher for this newly created course$/ do
-  @app.course_mgmt.visit
-  
-  @app.course_mgmt.expand_software_testing_category
-  
-  @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
   
   @app.course_mgmt.click_on :enrolled_users
   
