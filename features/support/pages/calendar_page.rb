@@ -1,8 +1,10 @@
 require 'date'
 require 'rspec'
+
 class CalendarPage < GenericPage
+
   def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/calendar/view.php?view=month"
+    @browser.goto "#{EnvConfig.base_url}/calendar/view.php?view=month"
   end 
   
   def check_events
