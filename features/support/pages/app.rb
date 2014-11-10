@@ -55,5 +55,9 @@ class App
   def enrolled_users
     MoodleEnrolledUsersPage.new @browser
   end
+  
+  def all_course_page
+    CoursePage.new @browser
+  end
 
 end
