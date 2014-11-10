@@ -4,8 +4,6 @@ Given(/^I am on the calendar page$/) do
 end
 
 And(/^there is a past event$/) do
-  @app.calendar.create_event
-  @app.calendar.visit
   @app.calendar.check_events
 end
 
