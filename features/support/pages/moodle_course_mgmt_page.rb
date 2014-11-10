@@ -22,28 +22,15 @@ class MoodleCourseManagementPage < GenericPage
   
   def click_on option
     options = {
-               view:           0,
-               edit:           1,
-               enrolled_users: 2,
-               delete:         3,
-               hide:           4,
-               backup:         5,
-               restore:        6
+               view:           /\w*course\/view.php\w*/,
+               edit:           /\w*course\/edit.php\w*/,
+               enrolled_users: /\w*enrol\/users.php\w*/,
+               delete:         /\w*course\/delete.php\w*/,
+               hide:           /\w*course\/manangemet.php\w*/,
+               backup:         /\w*backup\/backup.php\w*/,
+               restore:        /\w*backup\/restorefile.php\w*/
               }
     
-    #@browser.a(text: 'Edit').when_present.click - this doesn't work so I was forced to do the following..
-  
-    @browser.div(class: 'listing-actions course-detail-listing-actions').wait_until_present
-    # course_options_list = @browser.div(class: 'listing-actions course-detail-listing-actions').wait_until_present
-    # doesn't work either
-
-    # so what i did was took the div wrapper for all the available options for a course..
-    course_options_list = @browser.div(class: 'listing-actions course-detail-listing-actions')
-    # took all the available options for a course..
-    course_options = course_options_list.as
-    # identified that option..
-    course_option = course_options[options[option]]
-    # then clicked it
-    course_option.click
+    @browser.div(class: 'course-detail').div.a(href: options[option]).when_present.click
   end
 end
