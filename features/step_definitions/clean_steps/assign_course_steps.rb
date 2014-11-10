@@ -14,12 +14,9 @@ Then /^this course should be successfully created$/ do
   @app.course_mgmt.expand_software_testing_category
   
   @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
-  
-  expect(@browser.div(class: /\w*fullname/).when_present.text).to include(POST_TITLE[:course_to_be_assigned][0][:full_title])
-  expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:course_to_be_assigned][0][:short_title])
 end
 
-When /^I successfully assign a user to be the Teacher for this newly created course$/ do
+And /^I successfully assign a user to be the Teacher for this newly created course$/ do
   @app.course_mgmt.visit
   
   @app.course_mgmt.expand_software_testing_category
