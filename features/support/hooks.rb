@@ -40,6 +40,28 @@ After do |scenario|
   end
 end
 
+After('@MDL-47') do
+  # Delete Aaron Muir from the course's Teachers list
+  # so he can be added as a teacher again the next time 
+  # this scenario is run
+  
+  @app.login_page.logout
+  
+  @app.login_page.login_as :admin
+  
+  @browser.goto 'http://unix.spartaglobal.com/moodle3/enrol/users.php?id=77&page=0&perpage=100&sort=lastname&dir=ASC'
+  
+  enrolled_users = @browser.table(class: 'userenrolment table table-responsive ajaxactive').tbody.trs
+  
+  enrolled_users.each do |enrolled_user|
+    if enrolled_user.td.div(class: /\w*firstname/).text == 'Aaron Muir'
+      enrolled_user.td(class: /\w*c4\w*/).div.a(title: 'Unenrol').click
+      
+      @browser.button(value: 'Continue').click
+    end
+  end
+end
+
 # After all features have executed
 at_exit do
 
