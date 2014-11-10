@@ -33,6 +33,8 @@ When /^I successfully assign a user to be the Teacher for this newly created cou
   
   @app.course_mgmt.expand_software_testing_category
   
+  @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
+  
   @app.course_mgmt.click_on :enrolled_users
   
   @app.enrolled_users.enrol 'Aaron Muir'
