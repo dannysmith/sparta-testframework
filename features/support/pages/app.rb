@@ -20,27 +20,27 @@ class App
   end
 
   def course_creation
-    MoodleCourseCreationPage.new @browser
+    CourseCreationPage.new @browser
   end
 
   def course_mgmt
-    MoodleCourseManagementPage.new @browser
+    CourseManagementPage.new @browser
   end
 
   def login_page
-    MoodleLoginPage.new @browser
+    LoginPage.new @browser
   end
 
   def course_details
-    MoodleCourseDetailsPage.new @browser
+    CourseDetailsPage.new @browser
   end
 
   def course_editing
-    MoodleCourseEditingPage.new @browser
+    CourseEditingPage.new @browser
   end
 
   def enrolled_users
-    MoodleEnrolledUsersPage.new @browser
+    EnrolledUsersPage.new @browser
   end
 
 end

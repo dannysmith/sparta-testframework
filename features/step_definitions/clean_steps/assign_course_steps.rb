@@ -16,7 +16,7 @@ Then /^this course should be successfully created$/ do
   @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
   
   expect(@browser.div(class: /\w*fullname/).when_present.text).to include(POST_TITLE[:course_to_be_assigned][0][:full_title])
-      expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:course_to_be_assigned][0][:short_title])
+  expect(@browser.div(class: /\w*shortname/).when_present.text).to include(POST_TITLE[:course_to_be_assigned][0][:short_title])
 end
 
 When /^I successfully assign a user to be the Teacher for this newly created course$/ do
@@ -31,7 +31,7 @@ Then /^that user should have Teacher privileges settings for this course$/ do
   @app.login_page.login_as :student
   
   # Goto the course in which Aaron was assigned as a Teacher to 
-  @browser.goto "http://unix.spartaglobal.com/moodle3/course/view.php?id=77"
+  @browser.goto "#{EnvConfig.base_url}/course/view.php?id=77"
   
   expect(@browser.li(text: 'Turn editing on').exists?).to be true
 end
