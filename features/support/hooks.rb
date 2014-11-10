@@ -108,6 +108,14 @@ After('@MDL-47') do
   end
 end
 
+After('@MDL-14') do
+  @app.home.visit
+  
+  @browser.a(text: POST_TITLE[:course_to_be_enrolled][0][:full_title]).when_present.click
+  
+  @app.course_enrollment.unenrol
+end
+
 # After all features have executed
 at_exit do
 
