@@ -12,9 +12,14 @@ class CalendarPage < GenericPage
   
   def choose_past_events
     past_events_list_current
-    @browser.element(:text, @past_events_current.last).click
-    expect(@browser.div(:class, "name").text).to include @past_events_current.last
-    visit
+    past_events_list_current_length
+    if @events_list_current_length >0 
+      @browser.element(:text, @past_events_current.last).click
+      expect(@browser.div(:class, "name").text).to include @past_events_current.last
+      visit
+    elsif
+      raise "There are no past events, please create one"
+    end
   end
 
   def create_event
