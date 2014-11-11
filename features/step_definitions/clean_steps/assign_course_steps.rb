@@ -10,14 +10,6 @@ And /^I create a new course within this category$/ do
     @app.course_creation.create_course
   end
 end
-  
-Then /^this course should be successfully created$/ do
-  @app.course_mgmt.visit
-  
-  @app.course_mgmt.expand_software_testing_category
-  
-  @app.course_mgmt.goto_course POST_TITLE[:course_to_be_assigned][0][:full_title]
-end
 
 And /^I successfully assign a user to be the Teacher for this newly created course$/ do
   @app.course_mgmt.visit
@@ -39,7 +31,12 @@ Then /^that user should have Teacher privileges settings for this course$/ do
   @app.login_page.login_as :student
   
   # Goto the course in which Aaron was assigned as a Teacher to 
+<<<<<<< HEAD
   @browser.goto "#{EnvConfig.base_url}/course/view.php?id=77"
   
+=======
+  @browser.goto "http://unix.spartaglobal.com/moodle3/course/view.php?id=77"
+
+>>>>>>> 2251c0f26e3b941976aceda78fe27074f4c0361e
   expect(@browser.li(text: 'Turn editing on').exists?).to be true
 end
