@@ -41,7 +41,7 @@ class CalendarPage < GenericPage
   def update_event_date
     tomorrow_day = (Date.today +1).day
     tomorrow_month = (Date.today +1).month
-    if (@browser.url.include? "event") == true
+    if (@browser.url.include? "event")
       @browser.select_list(:id, "id_timestart_day").select_value(tomorrow_day)
       @browser.select_list(:id, "id_timestart_month").select_value(tomorrow_month)
       @browser.button(:id, "id_submitbutton").click
