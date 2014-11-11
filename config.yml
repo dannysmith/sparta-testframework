@@ -12,10 +12,10 @@ ci:
   admin_username: moodle
   admin_password: soXy3zX2JTRwZCXw!
 
-  # database_url: 88.208.245.234
-  # database_username: moodle
-  # database_password: moodle
-  # database_name: moodle
+  #database_url: 88.208.245.234
+  #database_username: moodle
+  #database_password: moodle
+  #database_name: moodle3
 
 uat:
   <<: *execution_defaults

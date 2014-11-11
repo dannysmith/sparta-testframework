@@ -31,9 +31,18 @@ POST_TITLE = YAML.load_file('features/support/data/default_product_data.yml')
 #                    host: EnvConfig.database_url,
 #                    database: EnvConfig.database_name,
 #                    password: EnvConfig.database_password)
-#
-## Set up World
-#World(RSpec::Matchers)
+                    
+# Scripts for the sql database. One to check the database can be connected to and one to delete the user derek. 
+# DO NOT USE AT THE MOMENT. THESE HAVENT BEEN TESTED YET!
+                    
+#DB.fetch("SELECT * FROM mdl3_user WHERE userame = 'derek'") do |row|
+#  p row[:username]
+#end
+
+#mdl3_user.where('username < ?', 'derek').delete
+
+# Set up World
+World(RSpec::Matchers)
 
 
 
