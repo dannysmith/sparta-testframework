@@ -67,7 +67,7 @@ end
 After('@MDL-14') do
   @app.home.visit
   
-  @browser.a(text: POST_TITLE[:course_to_be_enrolled][0][:full_title]).when_present.click
+  @browser.a(text: 'Anquite Course 2').when_present.click
   
   @app.course_enrollment.unenrol
 end
