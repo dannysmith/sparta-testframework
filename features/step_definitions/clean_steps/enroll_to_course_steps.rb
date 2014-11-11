@@ -3,7 +3,7 @@ Given /^that I am logged in as a student$/ do
 end
 
 When /^I enrol myself on a course$/ do
-  @app.home.click_on_course POST_TITLE[:course_to_be_enrolled][0][:full_title]
+  @app.home.click_on_course 'Anquite Course 2'
   
   @app.course_enrollment.enrol
 end
