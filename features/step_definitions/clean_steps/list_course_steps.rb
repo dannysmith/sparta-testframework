@@ -14,9 +14,9 @@ Then(/^I should see a list of all available courses$/) do
 end
 
 Then(/^I select an available course$/) do
-  @browser.goto "http://unix.spartaglobal.com/moodle3/course/view.php?id=52"
+  @browser.goto "#{EnvConfig.base_url}/course/view.php?id=52"
 end
 
 Then(/^I should be taken to that course page$/) do
-  expect(@browser.url.should == "http://unix.spartaglobal.com/moodle3/course/view.php?id=52")
+  expect(@browser.url.should == "#{EnvConfig.base_url}/course/view.php?id=52")
 end
