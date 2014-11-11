@@ -31,12 +31,7 @@ Then /^that user should have Teacher privileges settings for this course$/ do
   @app.login_page.login_as :student
   
   # Goto the course in which Aaron was assigned as a Teacher to 
-<<<<<<< HEAD
   @browser.goto "#{EnvConfig.base_url}/course/view.php?id=77"
-  
-=======
-  @browser.goto "http://unix.spartaglobal.com/moodle3/course/view.php?id=77"
 
->>>>>>> 2251c0f26e3b941976aceda78fe27074f4c0361e
   expect(@browser.li(text: 'Turn editing on').exists?).to be true
 end
