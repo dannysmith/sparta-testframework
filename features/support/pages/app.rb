@@ -42,5 +42,17 @@ class App
   def enrolled_users
     EnrolledUsersPage.new @browser
   end
+  
+  def all_course_page
+    CoursePage.new @browser
+  end
+  
+  def all_course_page
+    CoursePage.new @browser
+  end
+  
+  def all_course_page
+    CoursePage.new @browser
+  end
 
 end
