@@ -1,4 +1,4 @@
-class MoodleCourseCreationPage < GenericPage
+class CourseCreationPage < GenericPage
 
   def set_title title_type, title
     if title_type == :full
