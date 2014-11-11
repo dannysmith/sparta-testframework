@@ -33,5 +33,5 @@ Then /^that user should have Teacher privileges settings for this course$/ do
   # Goto the course in which Aaron was assigned as a Teacher to 
   @browser.goto "#{EnvConfig.base_url}/course/view.php?id=77"
 
-  expect(@browser.li(text: 'Turn editing on').exists?).to be true
+  expect(@browser.li(text: 'Turn editing on').when_present.exists?).to be true
 end
