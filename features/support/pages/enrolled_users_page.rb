@@ -22,7 +22,7 @@ class EnrolledUsersPage < GenericPage
     
     sleep(2)
     
-    enrolled_users_list = @browser.table(class: 'userenrolment table table-responsive ajaxactive').tbody.trs(class: /userinforow\w*/)
+    enrolled_users_list = @browser.trs(class: /userinforow\w*/)
     
     enrolled_users_list.each do |enrolled_user|
       if enrolled_user.td(class: 'field col_userdetails cell c0').div(class: /\w*_firstname/).text.include? name
