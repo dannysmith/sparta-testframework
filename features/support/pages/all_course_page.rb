@@ -1,6 +1,6 @@
 class CoursePage < GenericPage
 
   def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/course/"
+    @browser.goto "#{EnvConfig.base_url}/course/"
   end
 end
