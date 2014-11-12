@@ -42,6 +42,31 @@ After do |scenario|
   end
 end
 
+Before('@MDL-21') do
+  @app.login_page.login_as :admin
+  
+  @browser.goto 'http://unix.spartaglobal.com/moodle3/admin/user.php'
+  
+  @browser.text_field(id: 'id_realname').set('derek')
+  
+  @browser.button(name: 'addfilter').click
+  
+  # only delete Derek if he exists
+  if @browser.table(id: 'users').exists?
+    user_accounts = @browser.table(id: 'users').tbody.trs
+  
+    user_accounts.each do |acct|
+      if acct.td(class: /\w*c0\w*/).a.text == 'Derek Derekson'
+        acct.td(class: /\w*c5\w*/).a(title: 'Delete').click
+
+        @browser.button(value: 'Continue').when_present.click
+      end
+    end
+  end
+  
+  @app.login_page.logout
+end
+
 After('@MDL-47') do
   # Delete Aaron Muir from the course's Teachers list
   # so he can be added as a teacher again the next time 
@@ -51,7 +76,7 @@ After('@MDL-47') do
   
   @app.login_page.login_as :admin
   
-  @browser.goto 'http://unix.spartaglobal.com/moodle3/enrol/users.php?id=77&page=0&perpage=100&sort=lastname&dir=ASC'
+  @browser.goto "#{EnvConfig.admin_url}/user.php"
   
   enrolled_users = @browser.table(class: 'userenrolment table table-responsive ajaxactive').tbody.trs
   
