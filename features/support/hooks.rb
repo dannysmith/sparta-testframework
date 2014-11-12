@@ -73,7 +73,7 @@ After('@MDL-47') do
   
   @app.login_page.login_as :admin
   
-  @browser.goto 'http://unix.spartaglobal.com/moodle3/enrol/users.php?id=77&page=0&perpage=100&sort=lastname&dir=ASC'
+  @browser.goto "#{EnvConfig.admin_url}/user.php"
   
   enrolled_users = @browser.table(class: 'userenrolment table table-responsive ajaxactive').tbody.trs
   
