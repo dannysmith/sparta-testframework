@@ -42,6 +42,28 @@ After do |scenario|
   end
 end
 
+Before('@MDL-21') do
+  @app.login_page.login_as :admin
+  
+  @browser.goto 'http://unix.spartaglobal.com/moodle3/admin/user.php'
+  
+  @browser.text_field(id: 'id_realname').set('derek')
+  
+  @browser.button(name: 'addfilter').click
+  
+  user_accounts = @browser.table(id: 'users').when_present.tbody.trs
+  
+  user_accounts.each do |acct|
+    if acct.td(class: /\w*c0\w*/).a.text == 'Derek Derekson'
+      acct.td(class: /\w*c5\w*/).a(title: 'Delete').click
+      
+      @browser.button(value: 'Continue').when_present.click
+    end
+  end
+  
+  @app.login_page.logout
+end
+
 After('@MDL-47') do
   # Delete Aaron Muir from the course's Teachers list
   # so he can be added as a teacher again the next time 
