@@ -17,6 +17,9 @@ class RegistrationPage < GenericPage
     @browser.text_field(:id, "id_lastname").set "Derekson"
 
     @browser.button(:id, "id_submitbutton").click  
+    
+    # wait for the registration confirmation notice
+    @browser.div(id: 'notice').wait_until_present
   end
 
   def login_email
