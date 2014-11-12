@@ -1,9 +1,11 @@
 Given /^I am on the calendar page$/ do
-  @app.login_page.login_as :student
+  @app.login_page.login_as :admin
   @app.calendar.visit
 end
 
 And /^there is a past event$/ do
+  @app.calendar.create_event
+  @app.calendar.visit
   @app.calendar.check_events
 end
 
