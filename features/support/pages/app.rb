@@ -6,7 +6,7 @@ class App
   def home
     HomePage.new @browser
   end
-
+  
   def dashboard
     Dashboard.new @browser
   end
@@ -55,4 +55,7 @@ class App
     CoursePage.new @browser
   end
 
+  def course_enrollment
+    MoodleCourseEnrollmentPage.new @browser
+  end
 end

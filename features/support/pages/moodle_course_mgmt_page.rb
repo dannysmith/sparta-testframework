@@ -1,4 +1,4 @@
-class CourseManagementPage < GenericPage
+class MoodleCourseManagementPage < GenericPage
   
   def visit
     @browser.goto "http://unix.spartaglobal.com/moodle3/course/management.php"
