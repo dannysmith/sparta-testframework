@@ -1,6 +1,6 @@
 Feature: Enrolling on a course
 
-  @MDL-14
+  @MDL-14 @clean
   Scenario: A student enrolling himself on a course
     Given that I am logged in as a student
     When I enrol myself on a course

@@ -3,7 +3,7 @@ Feature: Updating Events
   I want the ability to update event details
   So that I can change the event if needed
 
-  @MDL-37
+  @MDL-37 @clean
   Scenario: Edit events
     Given I am logged in 
     And an event already exists

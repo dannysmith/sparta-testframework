@@ -1,6 +1,6 @@
 Feature: Deleting a Course
 
-Background:
+  Background:
     Given that I am logged in as a Teacher
     And there is a course called Obsolete Course in the Software Testing category
     
