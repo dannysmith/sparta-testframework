@@ -51,13 +51,16 @@ Before('@MDL-21') do
   
   @browser.button(name: 'addfilter').click
   
-  user_accounts = @browser.table(id: 'users').when_present.tbody.trs
+  # only delete Derek if he exists
+  if @browser.table(id: 'users').exists?
+    user_accounts = @browser.table(id: 'users').tbody.trs
   
-  user_accounts.each do |acct|
-    if acct.td(class: /\w*c0\w*/).a.text == 'Derek Derekson'
-      acct.td(class: /\w*c5\w*/).a(title: 'Delete').click
-      
-      @browser.button(value: 'Continue').when_present.click
+    user_accounts.each do |acct|
+      if acct.td(class: /\w*c0\w*/).a.text == 'Derek Derekson'
+        acct.td(class: /\w*c5\w*/).a(title: 'Delete').click
+
+        @browser.button(value: 'Continue').when_present.click
+      end
     end
   end
   
