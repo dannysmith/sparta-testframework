@@ -27,6 +27,6 @@ class RegistrationPage < GenericPage
   end
 
   def email_load_time
-    Watir::Wait.until{@browser.url == "https://mail.google.com/mail/\#inbox"}
+    Watir::Wait.until(EMAIL_WAIT){@browser.text.include?("Admin User")}
   end
 end

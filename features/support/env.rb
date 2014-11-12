@@ -22,6 +22,7 @@ World(RSpec::Matchers)
 
 CREDENTIALS = YAML.load_file('features/support/data/users.yml')
 POST_TITLE = YAML.load_file('features/support/data/default_product_data.yml')
+EMAIL_WAIT = 120
 
 # Add the license hack to the database (see IRD-1236). Can be removed when we have a proper licence.
 #require 'mysql2'
