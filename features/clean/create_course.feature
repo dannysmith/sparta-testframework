@@ -8,9 +8,8 @@ Feature: Course Creation
     When I select the Software Testing category in the Course Management Page
     And I choose to create a new course
     Then I should be sent to the Edit Course Settings page
-    When I enter the Full Title for the Course
-    And I enter the Short Title for the Course
-    And I set Topics as the Course Format
+    When I set Topics as the Course Format
+    And I enter the Full and Short Title for the Course
     Then the new course should be created
     And it should appear in the course list bearing its intended details
     
@@ -19,9 +18,8 @@ Feature: Course Creation
     When I select the Software Testing category in the Course Management Page
     And I choose to create a new course
     Then I should be sent to the Edit Course Settings page
-    When I enter the Full Title for the Course
-    And I enter the Short Title for the Course
-    And I set Weekly as the Course Format
+    When I set Weekly as the Course Format
+    And I enter the Full and Short Title for the Course
     Then the new course should be created
     And it should appear in the course list bearing its intended details
   
@@ -30,8 +28,7 @@ Feature: Course Creation
     When I select the Software Testing category in the Course Management Page
     And I choose to create a new course
     Then I should be sent to the Edit Course Settings page
-    When I enter the Full Title for the Course
-    And I enter the Short Title for the Course
-    And I set the Course to be Invisible
+    When I set the Course to be Invisible
+    And I enter the Full and Short Title for the Course
     Then the new course should be created
     And only an Administrator or a Teacher can view it

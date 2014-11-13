@@ -9,6 +9,13 @@ class CourseCreationPage < GenericPage
       raise "Title type can only either be 'full_title' or 'short_title'."
     end
   end
+
+  def create_course params
+    raise "You must provide a full title." unless params[:full_title]
+    
+    @browser.text_field(id: 'id_fullname').set(params[:full_title])
+    @browser.text_field(id: 'id_shortname').set(params[:short_title])
+  end
   
   def set_visibility_to visibility
     @browser.select_list(id: 'id_visible').select_value(visibility)
@@ -19,7 +26,7 @@ class CourseCreationPage < GenericPage
     @browser.select_list(id: 'id_format').when_present.select_value(course_format)
   end
   
-  def create_course
+  def confirm_course
     @browser.input(id: 'id_submitbutton').click
   end
 end

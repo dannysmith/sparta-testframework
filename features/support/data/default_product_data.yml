@@ -10,14 +10,17 @@
 :weekly: 
   - :full_title: WEEKLY FULL TITLE TEST
     :short_title: WEEKLY SHORT TITLE TEST
+    :type: weekly
 
 :topics:
   - :full_title: TOPICS FULL TITLE TEST
     :short_title: TOPICS SHORT TITLE TEST
+    :type: topics
 
 :invisible:
   - :full_title: INVISIBLE FULL TITLE TEST
     :short_title: INVISIBLE SHORT TITLE TEST
+    :type: invisible
     
 :edited_title:
   - :new_short_title: EDITED TOPICS SHORT TITLE TEST
