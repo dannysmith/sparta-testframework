@@ -33,19 +33,18 @@ CONFIG=ci HEADLESS=true bundle exec rake production
 ### Test Setup
 The registration automation is dependant on the test user not already existing in the database and the test email being empty. 
 If you are using gmail for the test email then there are instructions in the wiki on how to setup automated email deletion.
+[Test Setup Page](https://github.com/spartaglobal/sparta-testframework/wiki/Test-Setup)
 
 ## Strategy
 
 The features and step_definitions are logically split into two types:
 
-- **Clean Features** are acceptance criteria. They must always pass and are well-designed using page objects to abstract the workings of the individual pages.
-- **Dirty Features** are quick and dirty features or scenarios written by QAs or developers to test a specific part of the system. It's not expected that they always pass, as they may depend on some complex configuration and may not be written using page objects.
+- **Clean Features** are acceptance criteria. They must always pass and are well-designed using page objects to abstract the workings of the individual pages. The tech lead/reviewer has final on what goes in here. They will review the dirty code, make changes and add them here.
+- **Dirty Features** are quick and dirty features or scenarios written by QAs or developers to test a specific part of the system. It's not expected that they always pass, as they may depend on some complex configuration and may not be written using page objects. This is default where the devlopers will make their code. 
 
-By separating dirty features, it allows developers and QAs who are not experts at cucumber to use the tool without danger of breaking the acceptance tests running on Codeship. If a dirty test is deemed important enough, it could be refactored and turned into clean acceptance criteria. If a dirty test fails, it could indicate that the test is broken, or that iRedeem is broken. If it transpires that a dirty test is broken, it can be tagged with @off so that it never runs, or simply deleted.
+By separating dirty features, it allows developers and QAs who are not experts at cucumber to use the tool without danger of breaking the acceptance tests running on Codeship. If a dirty test is deemed important enough, it could be refactored and turned into clean acceptance criteria and added by the tech reviewer. If a dirty test fails, it could indicate that the test is broken, or that iRedeem is broken. If it transpires that a dirty test is broken, it can be tagged with @off so that it never runs, or simply deleted.
 
 These dirty tests, while not run with every commit, could be run at the beginning of regression testing to indicate possible bugs for manual testers to investigate.
-
-![Diagram](http://f.cl.ly/items/3P3g381H2U3C0c2C180E/Screen%20Shot%202014-02-25%20at%2012.19.11.png)
 
 ## Basic constructs
 
@@ -60,7 +59,45 @@ Then something should be checked
 
 ### Page Objects & the App class
 
-TODO
+The app class is where you call and initalise the page ogjects for each test that they are needed. When a new page object is added, you will need to add the "insert_name_page" class to here
+
+```
+class App
+  def initialize(b)
+    @browser = b
+  end
+ 
+  def home
+    HomePage.new @browser
+  end
+  
+  def dashboard
+    Dashboard.new @browser
+  end
+  
+  def example
+    InsertName.new @browser
+  end
+  ...
+end
+```
+
+Page Objects are where you write the code required to run the tests. The methods within the page objects contain the logic code to actually carry out the tests
+
+```
+class Dashboard < GenericPage
+  def site_admin
+    @browser.text.include?("Site Admin")
+  end
+  
+  def admin_panel
+    @browser.p(:id, "expandable_branch_71_siteadministration").text
+  end
+  ...
+end
+```
+
+Once made and checked to be working fine, then you should be able to call the actions within the step_definitions to execute the code
 
 ### Step Definitions
 
@@ -175,6 +212,8 @@ These are available to be used :
 
 Here's an example of one lifecycle that a feature might go through:
 
+For more in-depth project workflow, check out our wiki page: [Workflow](https://github.com/spartaglobal/sparta-testframework/wiki/Project-Workflow)
+
 ### 1. A BA creates a feature:
 
 ````ruby
@@ -239,9 +278,6 @@ There are a number of rake tasks available, and you can always add more. Some to
 - `rake t @sometag` runs a specific tag, again you'll probably use this lots when working locally.
 - `rake help` shows some details of the available tasks.
 
-## Assumptions
-
-TODO
 
 ## Using IRB inside the application
 
@@ -305,7 +341,20 @@ In an ideal world:
 
 1. Anyone can commit features to `/dirty`, but they must be tagged with a JIRA number and `@not_started`. The idea is that even BAs or developers could commit new feature files.
 2. Any QAs or Devs can commit to `/dirty_steps` and `/dirty_pages`, but they must pass locally first.
-3. Any code committed to `/clean`, whether features or ruby, must pass on CI and have been code reviewed by a another ruby developer.
+3. Any code committed to `/clean`, whether features or ruby, must pass on CI and have been code reviewed by the tech lead or appointed ruby developer.
+
+## Contributors
+
+Here is a list of everyone that has worked on the testframework. If there are any issues that need to be brought to our attention, please contact us below with "Your Name | sparta-testframework | Problem" in the email subject field.
+
+| Username | Name | E-mail |
+| -------|----------|----------|
+| aMuir | Aaron Muir | amuir@testingcircle.com |
+| dannysmith | Danny Smith | dmsith@testingcircle.com |
+| dkentuk | David Kent | dkent@testingcircle.com |
+| JaneLast | Jane Last | jlast@testingcircle.com |
+| romeoledesma | Romeo Ledesma | rledesma@testingcircle.com |
+| TGohil | Trishul Gohil | tgohil@testingcircle.com |
 
 
 
