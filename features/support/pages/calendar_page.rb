@@ -1,3 +1,10 @@
+# Used for all the relevant methods to do with events and calendar functions.
+# There are two private methods used at the bottom which are called from within this class.
+# These are used to compare the amount of calendar events before and after being deleted.
+#-------------------------------------------------------------------------------------------------------------
+# Author:      Aaron Muir
+# Modified:    2014-12-11
+#-------------------------------------------------------------------------------------------------------------
 require 'date'
 require 'rspec'
 
