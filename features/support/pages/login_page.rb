@@ -1,7 +1,7 @@
 class LoginPage < GenericPage
   
   def visit
-    @browser.goto "#{EnvConfig.base_url}/login/index.php"
+    @browser.goto "#{EnvConfig.base_url}login/index.php"
   end
   
   def login_as user_type
