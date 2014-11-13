@@ -12,9 +12,11 @@ This document describes the Moodle acceptance test/UI test framework. The framew
 
 ## Installation
 
-**Prerequisites**: Ruby 1.9.3 and MySQL-devel. On OSX you could use [Homebrew](http://brew.sh) to install these. I'd reccomend [Rbenv](https://github.com/sstephenson/rbenv) is you're on OSX. On windows you should install Ruby200 (32-bit version) and DevKit.
+**Prerequisites**: Ruby 1.9.3 and MySQL-devel. On OSX you could use [Homebrew](http://brew.sh) to install these. I'd reccomend [Rbenv](https://github.com/sstephenson/rbenv) is you're on OSX. 
 
-On OSX/Unix, is should just be a case of checking out the repository and running `bundle install`. Unfortunately, on Windows things are a little more difficult.
+On windows you should install Ruby193 (32-bit version) and DevKit.
+
+On OSX/Unix/windows, is should just be a case of checking out the repository and running `bundle install`.
 
 ### Cucumber Tests
 There's only one build step, which executes the following commands:
