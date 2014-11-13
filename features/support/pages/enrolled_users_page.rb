@@ -1,3 +1,8 @@
+# Used for enroll people in courses and assigning people as a teach on courses
+#-------------------------------------------------------------------------------------------------------------
+# Author:      Romeo Ledesma
+# Modified:    2014-12-11
+#-------------------------------------------------------------------------------------------------------------
 class EnrolledUsersPage < GenericPage
   def enrol name
     

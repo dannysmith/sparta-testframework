@@ -1,3 +1,8 @@
+# Used for setting all of the attributes needed for a course to be created
+#-------------------------------------------------------------------------------------------------------------
+# Author:      Romeo Ledesma
+# Modified:    2014-12-11
+#-------------------------------------------------------------------------------------------------------------
 class CourseCreationPage < GenericPage
 
   def set_title title_type, title

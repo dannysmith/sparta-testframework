@@ -1,3 +1,8 @@
+# Used for registering people and checking registration email has been sent
+#-------------------------------------------------------------------------------------------------------------
+# Author:      Aaron Muir
+# Modified:    2014-12-11
+#-------------------------------------------------------------------------------------------------------------
 class RegistrationPage < GenericPage
 
   #refactor into user.yml file
