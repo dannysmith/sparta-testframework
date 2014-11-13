@@ -212,6 +212,8 @@ These are available to be used :
 
 Here's an example of one lifecycle that a feature might go through:
 
+For more in-depth project workflow, check out our wiki page: [Workflow](https://github.com/spartaglobal/sparta-testframework/wiki/Project-Workflow)
+
 ### 1. A BA creates a feature:
 
 ````ruby
