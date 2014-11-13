@@ -152,13 +152,19 @@ Taking a leaf out of Rails' book, step definitions should be kept as 'skinny' as
 
 This isn't set in stone, but as a guide, the following tags are recommended:
 
-- **@dirty** - executed as part of the 'dirty' test suite. It's expected that some of these might fail.
+Currently being used: 
+
 - **@clean** - executed as part of the main test suite on CI Build Server. `rake production` currently executes all of these features, but when the test suite is large enough it would make sense to add a `rake regression` task to execute all @clean features, and attach this to a manual build on Codeship. This could be run before deploying trunk to a new environment, and `rake production` could be set to run only @smoke features.
-- **@not_started** - yet to be worked on, will never execute.
 - **@wip** - being worked on, will never execute unless explicitly called with `rake t @wip`. It's safe to commit these to master knowing that they won't run.
+- **@MDL-XXX** - Reference to a JIRA story or task. Ideally, all features should have this.
+
+
+These are available to be used :
+
+- **@dirty** - executed as part of the 'dirty' test suite. It's expected that some of these might fail.
+- **@not_started** - yet to be worked on, will never execute.
 - **@manual** - Flagged as a manual test, will never execute unless explicitly called with `rake t @manual`.
 - **@headless** - A browser will not be opened for these features or scenarios.
-- **@MDL-XXX** - Reference to a JIRA story or task. Ideally, all features should have this.
 - **@slow** - The feature is particularly slow and should not be run regularly.
 - **@smoke** - executed as part of the main test suite on CI Build Server **with every push**. This isn't currently being used (see @clean, above).
 
