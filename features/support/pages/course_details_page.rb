@@ -1,3 +1,8 @@
+# Used for checking course title and deleting course
+#-------------------------------------------------------------------------------------------------------------
+# Author:      Romeo Ledesma
+# Modified:    2014-12-11
+#-------------------------------------------------------------------------------------------------------------
 class CourseDetailsPage < GenericPage
 
   def course_title
