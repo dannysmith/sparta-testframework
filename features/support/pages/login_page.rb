@@ -1,8 +1,7 @@
-# NEEDS TO BE REFACTORED
 class LoginPage < GenericPage
   
   def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/login/index.php"
+    @browser.goto "#{EnvConfig.base_url}/login/index.php"
   end
   
   def login_as user_type

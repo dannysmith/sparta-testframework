@@ -9,5 +9,3 @@ Feature: Create Events
     When I go to the create event page
     And enter valid event details
     Then it should appear on the calendar
-
- 

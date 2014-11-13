@@ -10,3 +10,4 @@ Feature: Assigning a Course
     And I create a new course within this category
     And I successfully assign a user to be the Teacher for this newly created course
     Then that user should have Teacher privileges settings for this course
+    

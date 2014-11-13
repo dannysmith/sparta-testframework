@@ -1,4 +1,3 @@
-
 Given /^that I am on the Moodle Login Page to login as admin$/ do
   @app.login_page.visit
 

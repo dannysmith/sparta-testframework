@@ -10,3 +10,4 @@ Feature: Deleting a Course
     And I choose to delete the Obsolete Course
     Then it should be deleted
     And it should not appear within the Software Testing category anymore
+    

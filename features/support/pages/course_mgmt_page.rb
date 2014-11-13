@@ -1,7 +1,7 @@
 class CourseManagementPage < GenericPage
   
   def visit
-    @browser.goto "http://unix.spartaglobal.com/moodle3/course/management.php"
+    @browser.goto "#{EnvConfig.base_url}/course/management.php"
   end
   
   def goto_course_creation_form

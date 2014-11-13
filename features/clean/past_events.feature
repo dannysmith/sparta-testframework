@@ -11,3 +11,4 @@ Feature: Past Events
       Given I am on the calendar page
       And there is a past event
       Then I should be able to choose the past event
+      

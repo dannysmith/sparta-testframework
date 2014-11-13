@@ -8,3 +8,4 @@ Feature: Course Editing
     When I select the Software Testing category in the Course Management Page
     And I choose to Edit a Course's short title
     Then the course's short title should then be updated
+    

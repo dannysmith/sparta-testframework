@@ -32,3 +32,4 @@ Feature: Course Creation
     And I enter the Full and Short Title for the Course
     Then the new course should be created
     And only an Administrator or a Teacher can view it
+    

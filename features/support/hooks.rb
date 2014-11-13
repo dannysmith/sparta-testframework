@@ -45,7 +45,7 @@ end
 Before('@MDL-21') do
   @app.login_page.login_as :admin
   
-  @browser.goto 'http://unix.spartaglobal.com/moodle3/admin/user.php'
+  @browser.goto "#{EnvConfig.base_url}/admin/user.php"
   
   @browser.text_field(id: 'id_realname').set('derek')
   
@@ -97,6 +97,12 @@ After('@MDL-14') do
   @app.course_enrollment.unenrol
 end
 
+After('@MDL-18') do
+  @app.course_mgmt.click_on :edit
+
+  @app.course_editing.change_course_short_title_to TOPICS_POST[:short_title]
+end
+
 # After all features have executed
 at_exit do
 
@@ -113,5 +119,3 @@ def email_deletion
   @browser.div(:class, "T-Jo-auh").click
   @browser.div(:class, "ar9 T-I-J3 J-J5-Ji").click
 end
-
-

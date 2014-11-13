@@ -9,4 +9,4 @@ Feature: Listing Courses
     When I'm on the all course page
     Then I should see a list of all available courses
     And I should be able to see that course on the list
-    
+  
